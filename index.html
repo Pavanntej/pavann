@@ -292,23 +292,23 @@
     <nav>
         <div class="logo">Bookshelf</div>
         <div class="social-links">
-            <a href="mailto:pavanntej@gmail.com">Email</a>
+            <a href="mailto:pavanntej@email.com">Email</a>
             <a href="https://wa.me/919542648520">WhatsApp</a>
             <a href="https://instagram.com/pavanntej">Instagram</a>
             <a href="https://youtube.com/@pavanntej">YouTube</a>
         </div>
     </nav>
 
-    <header class="hero" id="hero-section" style="background-image: url('./images/poster/indexls.jpg');">
+    <header class="hero" id="hero-section" style="background-image: url('https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=2000&auto=format&fit=crop');">
         <div class="hero-overlay"></div>
         <div class="hero-content">
             
             <div class="hero-left">
-                <img id="hero-logo" src="./images/logo/index.png" alt="Book Logo" class="book-logo">
+                <img id="hero-logo" src="https://via.placeholder.com/400x150/000000/d4af37?text=BOOK+TITLE+LOGO" alt="Book Logo" class="book-logo">
                 
                 <div class="button-group">
-                    <a href="https://store.pothi.com/book/arasada-pavan-teja-miraz-0/" id="btn-color" class="btn btn-gold" target="_blank">Buy (Color)</a>
-                    <a href="https://store.pothi.com/book/arasada-pavan-teja-index/" id="btn-bw" class="btn btn-dark" target="_blank">Buy (B&W)</a>
+                    <a href="#" id="btn-color" class="btn btn-gold" target="_blank">Buy (Color)</a>
+                    <a href="#" id="btn-bw" class="btn btn-dark" target="_blank">Buy (B&W)</a>
                 </div>
                 <div class="button-group">
                     <button class="btn btn-dark" onclick="toggleInfo()">ℹ More Info</button>
@@ -317,7 +317,7 @@
 
                 <div class="more-info-panel" id="info-panel">
                     <p id="hero-desc">An epic journey through the realms of fantasy and mystery. Discover the secrets hidden within the pages of this cinematic masterpiece.</p>
-                    <strong style="color: #d4af37;">Genre: </strong><span id="hero-genre">Contemporary Romance</span>
+                    <strong style="color: #d4af37;">Genre: </strong><span id="hero-genre">Fantasy / Thriller</span>
                     <br><br>
                     <strong style="color: #d4af37;">Characters / Cast:</strong>
                     <div class="cast-container" id="hero-cast">
@@ -342,7 +342,7 @@
         <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=300&auto=format&fit=crop" alt="Author" class="author-img">
         <div class="author-info">
             <h2>About the Author</h2>
-            <p>I am Pavan Teja, a passionate writer and storyteller who dreams of becoming a filmmaker. I love creating stories and novels that come from deep emotions like love, pain, and human struggles. For me, storytelling is not just about writing—it is about bringing my imagination to life. That is why I take my stories a step further by creating AI-generated images and AI video musical trailers, turning them into a visual blueprint or storyboard. Through this, I prepare my stories for the day I get an opportunity to transform them into films and share them with the world.</p>
+            <p>Welcome to my cinematic bookshelf. I craft stories that blend deep emotional resonance with thrilling, fast-paced plots. Feel free to explore my worlds, watch the trailers, and reach out to me via social media.</p>
         </div>
     </section>
 
@@ -356,24 +356,29 @@
         const books = [
             {
                 id: 1,
-                title: "The Golden Shadow",
-                coverImg: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=400&auto=format&fit=crop",
-                bgImg: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=2000&auto=format&fit=crop",
-                logoImg: "https://via.placeholder.com/400x150/000000/d4af37?text=THE+GOLDEN+SHADOW",
+                title: "Index",
+                coverImg: "./images/card/index.jpg",
+                bgImg: "./images/poster/indexls.jpg",
+                logoImg: "./images/logo/index.png",
                 themeColor: "#1a1510", // A dark gold/brown tint for background hover
-                trailerId: "mX22D65TqAs", // Put your YouTube Short ID here
-                buyColorLink: "https://amazon.com",
-                buyBwLink: "https://amazon.com",
+                trailerId: "iuKvGftTKCU", // Put your YouTube Short ID here
+                buyColorLink: "https://store.pothi.com/book/arasada-pavan-teja-miraz-0/",
+                buyBwLink: "https://store.pothi.com/book/arasada-pavan-teja-index/",
                 desc: "When the sun sets, the golden shadows emerge to rewrite history. An epic tale of power, betrayal, and redemption.",
-                genre: "Dark Fantasy",
+                genre: "Contemporary Romance",
                 cast: [
-                    { name: "Arthur", img: "https://randomuser.me/api/portraits/men/32.jpg" },
-                    { name: "Elena", img: "https://randomuser.me/api/portraits/women/44.jpg" }
+                    { name: "Ananthika Sanilkumar", img: "https://randomuser.me/api/portraits/men/32.jpg" },
+                    { name: "Devaraj Rongali", img: "https://randomuser.me/api/portraits/women/44.jpg" },
+                    { name: "Sameera Kishore", img: "https://randomuser.me/api/portraits/women/44.jpg" },
+                    { name: "Late Uday Kiran", img: "https://randomuser.me/api/portraits/women/44.jpg" },
+                    { name: "Late Chandra Mohan", img: "https://randomuser.me/api/portraits/women/44.jpg" },
+                    { name: "Pavan Teja", img: "https://randomuser.me/api/portraits/women/44.jpg" },
+                    { name: "Sai Dhanyaa Pallath", img: "https://randomuser.me/api/portraits/women/44.jpg" }
                 ]
             },
             {
                 id: 2,
-                title: "Echoes of Charcoal",
+                title: "Naina",
                 coverImg: "https://images.unsplash.com/photo-1511108690759-009324a5033e?q=80&w=400&auto=format&fit=crop",
                 bgImg: "https://images.unsplash.com/photo-1505664159623-2a13f01b17a6?q=80&w=2000&auto=format&fit=crop",
                 logoImg: "https://via.placeholder.com/400x150/000000/d4af37?text=ECHOES+OF+CHARCOAL",
