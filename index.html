@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinematic Bookshelf</title>
+    <style>
+        /* --- CSS VARIABLES FOR THEME --- */
+        :root {
+            --charcoal-black: #0f0f0f;
+            --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7);
+            --dynamic-bg-color: #1a1510; /* Changes on hover */
+            --text-light: #f1f1f1;
+        }
+
+        /* --- GLOBAL STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--charcoal-black);
+            color: var(--text-light);
+            overflow-x: hidden;
+            transition: background-color 0.8s ease;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .social-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #d4af37;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 50px;
+            background-size: cover;
+            background-position: center;
+            /* The background image and overlay are set via JS */
+            transition: background 0.8s ease;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to right, var(--charcoal-black) 20%, transparent 60%),
+                        linear-gradient(to top, var(--charcoal-black) 5%, transparent 40%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 60px;
+        }
+
+        /* Left Side: Info & Buttons */
+        .hero-left {
+            max-width: 50%;
+        }
+
+        .book-logo {
+            max-width: 400px;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, filter 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+
+        .btn-gold {
+            background: var(--gold-gradient);
+            color: #000;
+        }
+
+        .btn-dark {
+            background-color: rgba(51, 51, 51, 0.8);
+            color: white;
+            border: 1px solid #d4af37;
+        }
+
+        /* Right Side: Trailer */
+        .hero-right {
+            width: 300px;
+            aspect-ratio: 9 / 16;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            border: 2px solid #d4af37;
+        }
+
+        .hero-right iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* --- MORE INFO PANEL --- */
+        .more-info-panel {
+            display: none; /* Hidden by default */
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid #d4af37;
+            max-width: 600px;
+        }
+
+        .more-info-panel p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: #ccc;
+        }
+
+        .cast-container {
+            display: flex;
+            gap: 15px;
+        }
+
+        .cast-card {
+            text-align: center;
+        }
+
+        .cast-card img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #555;
+            margin-bottom: 5px;
+        }
+
+        .cast-card span {
+            display: block;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        /* --- BOOK CAROUSEL --- */
+        .carousel-section {
+            padding: 20px 50px 50px 50px;
+            position: relative;
+            z-index: 5;
+            margin-top: -100px;
+        }
+
+        .carousel-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #d4af37;
+        }
+
+        .book-row {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: #d4af37 #333;
+        }
+
+        .book-card {
+            min-width: 200px;
+            height: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .book-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .book-card:hover {
+            transform: scale(1.08);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        /* --- AUTHOR & CONTACT SECTION --- */
+        .author-section {
+            padding: 50px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            background: #111;
+            border-top: 1px solid #333;
+        }
+
+        .author-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #d4af37;
+        }
+
+        .author-info h2 {
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+
+        .author-info p {
+            color: #ccc;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #0a0a0a;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Bookshelf</div>
+        <div class="social-links">
+            <a href="mailto:pavanntej@gmail.com">Email</a>
+            <a href="https://wa.me/919542648520">WhatsApp</a>
+            <a href="https://instagram.com/pavanntej">Instagram</a>
+            <a href="https://youtube.com/@pavanntej">YouTube</a>
+        </div>
+    </nav>
+
+    <header class="hero" id="hero-section" style="background-image: url('https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=2000&auto=format&fit=crop');">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            
+            <div class="hero-left">
+                <img id="hero-logo" src="https://via.placeholder.com/400x150/000000/d4af37?text=BOOK+TITLE+LOGO" alt="Book Logo" class="book-logo">
+                
+                <div class="button-group">
+                    <a href="#" id="btn-color" class="btn btn-gold" target="_blank">Buy (Color)</a>
+                    <a href="#" id="btn-bw" class="btn btn-dark" target="_blank">Buy (B&W)</a>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-dark" onclick="toggleInfo()">ℹ More Info</button>
+                    <button class="btn btn-dark" onclick="shareBook()">➦ Share</button>
+                </div>
+
+                <div class="more-info-panel" id="info-panel">
+                    <p id="hero-desc">An epic journey through the realms of fantasy and mystery. Discover the secrets hidden within the pages of this cinematic masterpiece.</p>
+                    <strong style="color: #d4af37;">Genre: </strong><span id="hero-genre">Fantasy / Thriller</span>
+                    <br><br>
+                    <strong style="color: #d4af37;">Characters / Cast:</strong>
+                    <div class="cast-container" id="hero-cast">
+                        </div>
+                </div>
+            </div>
+
+            <div class="hero-right">
+                <iframe id="hero-trailer" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&loop=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+
+        </div>
+    </header>
+
+    <section class="carousel-section">
+        <h2 class="carousel-title">Other Works</h2>
+        <div class="book-row" id="book-row">
+            </div>
+    </section>
+
+    <section class="author-section">
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=300&auto=format&fit=crop" alt="Author" class="author-img">
+        <div class="author-info">
+            <h2>About the Author</h2>
+            <p>I am Pavan Teja, a passionate writer and storyteller who dreams of becoming a filmmaker. I love creating stories and novels that come from deep emotions like love, pain, and human struggles. For me, storytelling is not just about writing—it is about bringing my imagination to life. That is why I take my stories a step further by creating AI-generated images and AI video musical trailers, turning them into a visual blueprint or storyboard. Through this, I prepare my stories for the day I get an opportunity to transform them into films and share them with the world.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Your Name. All rights reserved. Designed with Charcoal & Gold.</p>
+    </footer>
+
+    <script>
+        // 1. The Book "Database"
+        // This array holds all the information for your books.
+        const books = [
+            {
+                id: 1,
+                title: "The Golden Shadow",
+                coverImg: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=400&auto=format&fit=crop",
+                bgImg: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=2000&auto=format&fit=crop",
+                logoImg: "https://via.placeholder.com/400x150/000000/d4af37?text=THE+GOLDEN+SHADOW",
+                themeColor: "#1a1510", // A dark gold/brown tint for background hover
+                trailerId: "mX22D65TqAs", // Put your YouTube Short ID here
+                buyColorLink: "https://amazon.com",
+                buyBwLink: "https://amazon.com",
+                desc: "When the sun sets, the golden shadows emerge to rewrite history. An epic tale of power, betrayal, and redemption.",
+                genre: "Dark Fantasy",
+                cast: [
+                    { name: "Arthur", img: "https://randomuser.me/api/portraits/men/32.jpg" },
+                    { name: "Elena", img: "https://randomuser.me/api/portraits/women/44.jpg" }
+                ]
+            },
+            {
+                id: 2,
+                title: "Echoes of Charcoal",
+                coverImg: "https://images.unsplash.com/photo-1511108690759-009324a5033e?q=80&w=400&auto=format&fit=crop",
+                bgImg: "https://images.unsplash.com/photo-1505664159623-2a13f01b17a6?q=80&w=2000&auto=format&fit=crop",
+                logoImg: "https://via.placeholder.com/400x150/000000/d4af37?text=ECHOES+OF+CHARCOAL",
+                themeColor: "#0f1a1f", // A dark blue/charcoal tint
+                trailerId: "dQw4w9WgXcQ", 
+                buyColorLink: "https://amazon.com",
+                buyBwLink: "https://amazon.com",
+                desc: "A detective with nothing to lose finds a sketchbook that predicts the future. A gripping noir thriller.",
+                genre: "Noir Thriller / Mystery",
+                cast: [
+                    { name: "Det. Vance", img: "https://randomuser.me/api/portraits/men/62.jpg" },
+                    { name: "Sarah", img: "https://randomuser.me/api/portraits/women/68.jpg" }
+                ]
+            },
+            {
+                id: 3,
+                title: "Midnight Sovereign",
+                coverImg: "https://images.unsplash.com/photo-1614165936126-2ed18e471b3b?q=80&w=400&auto=format&fit=crop",
+                bgImg: "https://images.unsplash.com/photo-1614165936126-2ed18e471b3b?q=80&w=2000&auto=format&fit=crop",
+                logoImg: "https://via.placeholder.com/400x150/000000/d4af37?text=MIDNIGHT+SOVEREIGN",
+                themeColor: "#1a0f12", // A dark crimson tint
+                trailerId: "mX22D65TqAs", 
+                buyColorLink: "https://amazon.com",
+                buyBwLink: "https://amazon.com",
+                desc: "The ruler of the night sky descends. A cosmic romance intertwined with high-stakes galactic warfare.",
+                genre: "Sci-Fi / Romance",
+                cast: [
+                    { name: "Nova", img: "https://randomuser.me/api/portraits/women/90.jpg" },
+                    { name: "Orion", img: "https://randomuser.me/api/portraits/men/90.jpg" }
+                ]
+            }
+        ];
+
+        // 2. Generate Book Cards dynamically
+        const bookRow = document.getElementById('book-row');
+
+        books.forEach(book => {
+            const card = document.createElement('div');
+            card.className = 'book-card';
+            card.innerHTML = `<img src="${book.coverImg}" alt="${book.title}">`;
+            
+            // Hover effect: Change background theme color
+            card.addEventListener('mouseenter', () => {
+                document.body.style.backgroundColor = book.themeColor;
+            });
+            card.addEventListener('mouseleave', () => {
+                document.body.style.backgroundColor = 'var(--charcoal-black)';
+            });
+
+            // Click effect: Update Hero Section
+            card.addEventListener('click', () => {
+                updateHeroSection(book);
+            });
+
+            bookRow.appendChild(card);
+        });
+
+        // 3. Function to update the Hero Section when a book is clicked
+        function updateHeroSection(book) {
+            // Scroll to top seamlessly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Update Background and Logo
+            const heroSection = document.getElementById('hero-section');
+            heroSection.style.backgroundImage = `url('${book.bgImg}')`;
+            document.getElementById('hero-logo').src = book.logoImg;
+
+            // Update Video Trailer (Autoplay & Mute enabled for YouTube)
+            document.getElementById('hero-trailer').src = `https://www.youtube.com/embed/${book.trailerId}?autoplay=1&mute=1&loop=1`;
+
+            // Update Links
+            document.getElementById('btn-color').href = book.buyColorLink;
+            document.getElementById('btn-bw').href = book.buyBwLink;
+
+            // Update Description & Genre
+            document.getElementById('hero-desc').innerText = book.desc;
+            document.getElementById('hero-genre').innerText = book.genre;
+
+            // Update Cast Cards
+            const castContainer = document.getElementById('hero-cast');
+            castContainer.innerHTML = ''; // Clear old cast
+            book.cast.forEach(person => {
+                castContainer.innerHTML += `
+                    <div class="cast-card">
+                        <img src="${person.img}" alt="${person.name}">
+                        <span>${person.name}</span>
+                    </div>
+                `;
+            });
+        }
+
+        // 4. Toggle "More Info" logic
+        function toggleInfo() {
+            const panel = document.getElementById('info-panel');
+            if (panel.style.display === 'block') {
+                panel.style.display = 'none';
+            } else {
+                panel.style.display = 'block';
+            }
+        }
+
+        // 5. Share functionality (Copies website link to clipboard)
+        function shareBook() {
+            navigator.clipboard.writeText(window.location.href);
+            alert("Website link copied to clipboard!");
+        }
+
+        // Initialize with the first book
+        updateHeroSection(books[0]);
+
+    </script>
+</body>
+</html>
