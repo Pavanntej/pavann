@@ -445,6 +445,7 @@
 
         // 3. Function to update the Hero Section when a book is clicked
         function updateHeroSection(book) {
+            document.documentElement.style.setProperty('--vignette-color', book.vignetteColor || '#0f0f0f');
             // Scroll to top seamlessly
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
