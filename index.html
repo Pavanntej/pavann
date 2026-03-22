@@ -73,9 +73,9 @@
             padding: 0 50px;
             background-size: cover;
             background-position: center;
-            /* The background image and overlay are set via JS */
             transition: background 0.8s ease;
         }
+
         .hero-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -84,7 +84,7 @@
             z-index: 1;
             transition: background 0.8s ease;
         }
-        }
+        /* I REMOVED THE EXTRA '}' THAT WAS HERE */
 
         .hero-content {
             position: relative;
@@ -162,7 +162,7 @@
 
         /* --- MORE INFO PANEL --- */
         .more-info-panel {
-            display: none; /* Hidden by default */
+            display: none; 
             margin-top: 20px;
             background: rgba(0, 0, 0, 0.7);
             padding: 20px;
@@ -314,8 +314,7 @@
                 </div>
                 <div class="button-group">
                     <button class="btn btn-dark" onclick="toggleInfo()">ℹ More Info</button>
-                    <button class="btn btn-dark" onclick="shareBook()">➦ </button>
-                </div>
+                    <button class="btn btn-dark" onclick="shareBook()">➦ Share</button> </div>
 
                 <div class="more-info-panel" id="info-panel">
                     <p id="hero-desc">An epic journey through the realms of fantasy and mystery. Discover the secrets hidden within the pages of this cinematic masterpiece.</p>
@@ -353,8 +352,6 @@
     </footer>
 
     <script>
-        // 1. The Book "Database"
-        // This array holds all the information for your books.
         const books = [
             {
                 id: 1,
@@ -363,7 +360,8 @@
                 bgImg: "./images/poster/indexls.jpg",
                 logoImg: "./images/logo/index.png",
                 vignetteColor: "#0f0f0f",
-                trailerId: "iuKvGftTKCU", // Put your YouTube Short ID here
+                themeColor: "#0f0f0f", /* Added themeColor to prevent bugs */
+                trailerId: "iuKvGftTKCU", 
                 buyColorLink: "https://store.pothi.com/book/arasada-pavan-teja-miraz-0/",
                 buyBwLink: "https://store.pothi.com/book/arasada-pavan-teja-index/",
                 desc: "The narrative explores the intense emotional journey of someone whose quiet obsession with a person leads them to build an entire imaginary world around them, making every decision point back to the person they love.",
@@ -383,7 +381,8 @@
                 coverImg: "./images/card/naina.jpg",
                 bgImg: "./images/poster/naina.png",
                 logoImg: "./images/logo/Naina.png",
-                themeColor: "#0f1a1f", // A dark blue/charcoal tint
+                vignetteColor: "#0f1a1f", /* Added vignetteColor to match theme */
+                themeColor: "#0f1a1f", 
                 trailerId: "26lIL6vax30", 
                 buyColorLink: "https://store.pothi.com/book/arasada-pavan-teja-naina/",
                 buyBwLink: "https://store.pothi.com/book/arasada-pavan-teja-vyshu-1/",
@@ -404,6 +403,7 @@
                 bgImg: "https://images.unsplash.com/photo-1614165936126-2ed18e471b3b?q=80&w=2000&auto=format&fit=crop",
                 logoImg: "./images/logo/miraz.png",
                 vignetteColor: "#050a15",
+                themeColor: "#050a15", /* Added themeColor to prevent bugs */
                 trailerId: "meM7mPIHqyk", 
                 buyColorLink: "https://store.pothi.com/book/arasada-pavan-teja-miraz-2/",
                 buyBwLink: "https://store.pothi.com/book/arasada-pavan-teja-miraz/",
@@ -419,7 +419,6 @@
             }
         ];
 
-        // 2. Generate Book Cards dynamically
         const bookRow = document.getElementById('book-row');
 
         books.forEach(book => {
@@ -427,15 +426,14 @@
             card.className = 'book-card';
             card.innerHTML = `<img src="${book.coverImg}" alt="${book.title}">`;
             
-            // Hover effect: Change background theme color
             card.addEventListener('mouseenter', () => {
-                document.body.style.backgroundColor = book.themeColor;
+                // Now safely falls back if themeColor is missing somehow
+                document.body.style.backgroundColor = book.themeColor || '#0f0f0f'; 
             });
             card.addEventListener('mouseleave', () => {
                 document.body.style.backgroundColor = 'var(--charcoal-black)';
             });
 
-            // Click effect: Update Hero Section
             card.addEventListener('click', () => {
                 updateHeroSection(book);
             });
@@ -443,31 +441,24 @@
             bookRow.appendChild(card);
         });
 
-        // 3. Function to update the Hero Section when a book is clicked
         function updateHeroSection(book) {
             document.documentElement.style.setProperty('--vignette-color', book.vignetteColor || '#0f0f0f');
-            // Scroll to top seamlessly
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // Update Background and Logo
             const heroSection = document.getElementById('hero-section');
             heroSection.style.backgroundImage = `url('${book.bgImg}')`;
             document.getElementById('hero-logo').src = book.logoImg;
 
-            // Update Video Trailer (Autoplay & Mute enabled for YouTube)
             document.getElementById('hero-trailer').src = `https://www.youtube.com/embed/${book.trailerId}?autoplay=1&mute=1&loop=1`;
 
-            // Update Links
             document.getElementById('btn-color').href = book.buyColorLink;
             document.getElementById('btn-bw').href = book.buyBwLink;
 
-            // Update Description & Genre
             document.getElementById('hero-desc').innerText = book.desc;
             document.getElementById('hero-genre').innerText = book.genre;
 
-            // Update Cast Cards
             const castContainer = document.getElementById('hero-cast');
-            castContainer.innerHTML = ''; // Clear old cast
+            castContainer.innerHTML = ''; 
             book.cast.forEach(person => {
                 castContainer.innerHTML += `
                     <div class="cast-card">
@@ -478,7 +469,6 @@
             });
         }
 
-        // 4. Toggle "More Info" logic
         function toggleInfo() {
             const panel = document.getElementById('info-panel');
             if (panel.style.display === 'block') {
@@ -488,13 +478,11 @@
             }
         }
 
-        // 5. Share functionality (Copies website link to clipboard)
         function shareBook() {
             navigator.clipboard.writeText(window.location.href);
             alert("Website link copied to clipboard!");
         }
 
-        // Initialize with the first book
         updateHeroSection(books[0]);
 
     </script>
