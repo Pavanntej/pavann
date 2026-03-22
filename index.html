@@ -84,11 +84,10 @@
             z-index: 1;
             transition: background 0.8s ease;
         }
-        /* I REMOVED THE EXTRA '}' THAT WAS HERE */
 
         .hero-content {
             position: relative;
-            z-index: 2;
+            z-index: 7;
             display: flex;
             width: 100%;
             justify-content: space-between;
@@ -99,6 +98,7 @@
         /* Left Side: Info & Buttons */
         .hero-left {
             max-width: 70%;
+            position: relative;
         }
 
         .book-logo {
@@ -163,12 +163,15 @@
         /* --- MORE INFO PANEL --- */
         .more-info-panel {
             display: none; 
+            position: absolute;
+            z-index: 10;
             margin-top: 20px;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(5, 10, 21, 0.95);
             padding: 20px;
             border-radius: 8px;
             border-left: 3px solid #d4af37;
             max-width: 100%;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
         }
 
         .more-info-panel p {
