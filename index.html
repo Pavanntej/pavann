@@ -66,10 +66,10 @@
         /* --- HERO SECTION --- */
         .hero {
             position: relative;
-            height: 100vh;
+            min-height: 100vh; /* Changed from strictly 'height' to 'min-height' */
             display: flex;
             align-items: center;
-            padding: 0 50px;
+            padding: 120px 50px 150px 50px; /* Added top and bottom padding to protect the content */
             background-size: cover;
             background-position: center;
             /* The background image and overlay are set via JS */
@@ -398,18 +398,21 @@
             {
                 id: 3,
                 title: "Miraz",
-                coverImg: "https://images.unsplash.com/photo-1614165936126-2ed18e471b3b?q=80&w=400&auto=format&fit=crop",
+                coverImg: "./images/card/miraz.jpg",
                 bgImg: "https://images.unsplash.com/photo-1614165936126-2ed18e471b3b?q=80&w=2000&auto=format&fit=crop",
-                logoImg: "https://via.placeholder.com/400x150/000000/d4af37?text=MIDNIGHT+SOVEREIGN",
+                logoImg: "./images/logo/miraz.png",
                 themeColor: "#1a0f12", // A dark crimson tint
-                trailerId: "mX22D65TqAs", 
-                buyColorLink: "https://amazon.com",
-                buyBwLink: "https://amazon.com",
-                desc: "The ruler of the night sky descends. A cosmic romance intertwined with high-stakes galactic warfare.",
-                genre: "Sci-Fi / Romance",
+                trailerId: "meM7mPIHqyk", 
+                buyColorLink: "https://store.pothi.com/book/arasada-pavan-teja-miraz-2/",
+                buyBwLink: "https://store.pothi.com/book/arasada-pavan-teja-miraz/",
+                desc: "After an insecure surgeon named Vijay buys an AI mirror that displays a "perfected" version of himself, he becomes entangled in a dark conspiracy involving the restless spirit and a global data-harvesting empire, ultimately teaming up with a hacker to expose the corrupt corporation responsible for her death",
+                genre: "Sci-Fi Horror/ Techno Thriller",
                 cast: [
-                    { name: "Nova", img: "https://randomuser.me/api/portraits/women/90.jpg" },
-                    { name: "Orion", img: "https://randomuser.me/api/portraits/men/90.jpg" }
+                    { name: "Vissa Subash Chandra", img: "https://randomuser.me/api/portraits/women/90.jpg" },
+                    { name: "Lahari Paricharla", img: "https://randomuser.me/api/portraits/women/90.jpg" },
+                    { name: "Seela Manikanta Sai", img: "https://randomuser.me/api/portraits/women/90.jpg" },
+                    { name: "Late Kota Srinivas", img: "https://randomuser.me/api/portraits/women/90.jpg" },
+                    { name: "Jagapathi Babu", img: "https://randomuser.me/api/portraits/men/90.jpg" }
                 ]
             }
         ];
