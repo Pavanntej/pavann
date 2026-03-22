@@ -287,7 +287,36 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
+/* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 850px) {
+            .hero-content {
+                flex-direction: column; /* Stacks items vertically */
+                margin-top: 100px;
+                text-align: center;
+            }
+            .hero-left {
+                max-width: 100%; /* Allows left side to take full width */
+                margin-bottom: 40px;
+                display: flex;
+                flex-direction: column;
+                align-items: center; /* Centers the logo and buttons */
+            }
+            .button-group, .cast-container {
+                justify-content: center; /* Centers buttons and cast on mobile */
+            }
+            .hero-right {
+                width: 100%;
+                max-width: 320px; /* Keeps the trailer a nice size */
+                margin-bottom: 50px;
+            }
+            nav {
+                flex-direction: column;
+                padding: 15px;
+            }
+            .social-links {
+                margin-top: 15px;
+            }
+        }
     </style>
 </head>
 <body>
