@@ -11,6 +11,7 @@
             --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7);
             --dynamic-bg-color: #1a1510; /* Changes on hover */
             --text-light: #f1f1f1;
+            --vignette-color: #0f0f0f;
         }
 
         /* --- GLOBAL STYLES --- */
@@ -78,9 +79,11 @@
         .hero-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(to right, var(--charcoal-black) 20%, transparent 60%),
+            background: linear-gradient(to right, var(--vignette-color) 20%, transparent 60%),
                         linear-gradient(to top, var(--charcoal-black) 5%, transparent 40%);
             z-index: 1;
+            transition: background 0.8s ease;
+        }
         }
 
         .hero-content {
@@ -95,7 +98,7 @@
 
         /* Left Side: Info & Buttons */
         .hero-left {
-            max-width: 66%;
+            max-width: 70%;
         }
 
         .book-logo {
@@ -359,7 +362,7 @@
                 coverImg: "./images/card/index.jpg",
                 bgImg: "./images/poster/indexls.jpg",
                 logoImg: "./images/logo/index.png",
-                themeColor: "#1a1510", // A dark gold/brown tint for background hover
+                vignetteColor: "#0f0f0f",
                 trailerId: "iuKvGftTKCU", // Put your YouTube Short ID here
                 buyColorLink: "https://store.pothi.com/book/arasada-pavan-teja-miraz-0/",
                 buyBwLink: "https://store.pothi.com/book/arasada-pavan-teja-index/",
@@ -400,7 +403,7 @@
                 coverImg: "./images/card/miraz.jpg",
                 bgImg: "https://images.unsplash.com/photo-1614165936126-2ed18e471b3b?q=80&w=2000&auto=format&fit=crop",
                 logoImg: "./images/logo/miraz.png",
-                themeColor: "#1a0f12", // A dark crimson tint
+                vignetteColor: "#050a15",
                 trailerId: "meM7mPIHqyk", 
                 buyColorLink: "https://store.pothi.com/book/arasada-pavan-teja-miraz-2/",
                 buyBwLink: "https://store.pothi.com/book/arasada-pavan-teja-miraz/",
