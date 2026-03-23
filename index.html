@@ -318,6 +318,30 @@
             .social-links {
                 margin-top: 15px;
             }
+           .author-section {
+                flex-direction: column; /* Stacks items vertically */
+                padding: 40px 20px;
+                text-align: center; /* Centers the text */
+            }
+            
+            .author-info {
+                display: contents; /* Unboxes the text so we can freely reorder the h2 and p tags */
+            }
+            
+            .author-info h2 {
+                order: 1; /* Places the heading first */
+                margin-bottom: 20px;
+            }
+            
+            .author-img {
+                order: 2; /* Places the photo second, below the heading */
+                margin-bottom: 20px;
+            }
+            
+            .author-info p {
+                order: 3; /* Places the description third, below the photo */
+                max-width: 100%; /* Ensures the text takes full width on small screens */
+            }
         }
     </style>
 </head>
