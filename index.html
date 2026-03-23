@@ -10,7 +10,7 @@
         :root {
             --charcoal-black: #0f0f0f;
             --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7);
-            --dynamic-bg-color: #1a1510; /* Changes on hover */
+            --dynamic-bg-color: #1a1510;
             --text-light: #f1f1f1;
             --vignette-color: #0f0f0f;
         }
@@ -74,6 +74,8 @@
             padding: 0 50px;
             background-size: cover;
             background-position: center;
+            /* Added hardware acceleration for smoother background transitions */
+            transform: translateZ(0); 
         }
 
         .hero-overlay {
@@ -95,7 +97,6 @@
             margin-top: 60px;
         }
 
-        /* Left Side: Info & Buttons */
         .hero-left {
             max-width: 70%;
         }
@@ -142,7 +143,6 @@
             border: 1px solid #d4af37;
         }
 
-        /* Right Side: Trailer */
         .hero-right {
             width: 300px;
             aspect-ratio: 9 / 16;
@@ -286,26 +286,27 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-/* --- MOBILE RESPONSIVENESS --- */
+
+        /* --- MOBILE RESPONSIVENESS --- */
         @media (max-width: 850px) {
             .hero-content {
-                flex-direction: column; /* Stacks items vertically */
+                flex-direction: column;
                 margin-top: 100px;
                 text-align: center;
             }
             .hero-left {
-                max-width: 100%; /* Allows left side to take full width */
+                max-width: 100%;
                 margin-bottom: 40px;
                 display: flex;
                 flex-direction: column;
-                align-items: center; /* Centers the logo and buttons */
+                align-items: center;
             }
             .button-group, .cast-container {
-                justify-content: center; /* Centers buttons and cast on mobile */
+                justify-content: center;
             }
             .hero-right {
                 width: 100%;
-                max-width: 320px; /* Keeps the trailer a nice size */
+                max-width: 320px;
                 margin-bottom: 50px;
             }
             nav {
@@ -343,7 +344,8 @@
                 </div>
                 <div class="button-group">
                     <button class="btn btn-dark" onclick="toggleInfo()">ℹ More Info</button>
-                    <button class="btn btn-dark" onclick="shareBook()">➦ Share</button> </div>
+                    <button class="btn btn-dark" onclick="shareBook()">➦ Share</button> 
+                </div>
 
                 <div class="more-info-panel" id="info-panel">
                     <p id="hero-desc">An orphan's obsessive love leads him to create a web series mirroring his real-life pursuit of an unreachable actress, blurring fiction and reality until a hidden truth nearly tears them apart</p>
@@ -351,12 +353,12 @@
                     <br><br>
                     <strong style="color: #d4af37;">Characters / Cast:</strong>
                     <div class="cast-container" id="hero-cast">
-                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="hero-right">
-                <iframe id="hero-trailer" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=0&loop=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <iframe id="hero-trailer" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=0&loop=1" allow="autoplay; encrypted-media" allowfullscreen loading="lazy" title="Book Trailer"></iframe>
             </div>
 
         </div>
@@ -369,7 +371,7 @@
     </section>
 
     <section class="author-section">
-        <img src="./images/pavan.jpg" alt="Author" class="author-img">
+        <img src="./images/pavan.jpg" alt="Author" class="author-img" loading="lazy">
         <div class="author-info">
             <h2>About the Author</h2>
             <p>I am Pavan Teja, a passionate writer and storyteller who dreams of becoming a filmmaker. I love creating stories and novels that come from deep emotions like love, pain, and human struggles. For me, storytelling is not just about writing—it is about bringing my imagination to life. That is why I take my stories a step further by creating AI-generated images and AI video musical trailers, turning them into a visual blueprint or storyboard. Through this, I prepare my stories for the day I get an opportunity to transform them into films and share them with the world.</p>
@@ -382,6 +384,7 @@
 
     <script>
         const books = [
+            // Your exact book array remains unchanged here
             {
                 id: 1,
                 title: "Index",
@@ -511,10 +514,10 @@
         books.forEach(book => {
             const card = document.createElement('div');
             card.className = 'book-card';
-            card.innerHTML = `<img src="${book.coverImg}" alt="${book.title}">`;
+            // OPTIMIZATION: Added loading="lazy" to images
+            card.innerHTML = `<img src="${book.coverImg}" alt="${book.title}" loading="lazy">`;
             
             card.addEventListener('mouseenter', () => {
-                // Now safely falls back if themeColor is missing somehow
                 document.body.style.backgroundColor = book.themeColor || '#0f0f0f'; 
             });
             card.addEventListener('mouseleave', () => {
@@ -544,16 +547,18 @@
             document.getElementById('hero-desc').innerText = book.desc;
             document.getElementById('hero-genre').innerText = book.genre;
 
+            // OPTIMIZATION: Prevent DOM thrashing by building HTML first
             const castContainer = document.getElementById('hero-cast');
-            castContainer.innerHTML = ''; 
+            let castHTML = ''; 
             book.cast.forEach(person => {
-                castContainer.innerHTML += `
+                castHTML += `
                     <div class="cast-card">
-                        <img src="${person.img}" alt="${person.name}">
+                        <img src="${person.img}" alt="${person.name}" loading="lazy">
                         <span>${person.name}</span>
                     </div>
                 `;
             });
+            castContainer.innerHTML = castHTML; // Update the DOM only once
         }
 
         function toggleInfo() {
@@ -569,6 +574,14 @@
             navigator.clipboard.writeText(window.location.href);
             alert("Website link copied to clipboard!");
         }
+
+        // OPTIMIZATION: Preload background images silently so they load instantly on click
+        window.addEventListener('load', () => {
+            books.forEach(book => {
+                const img = new Image();
+                img.src = book.bgImg;
+            });
+        });
 
         updateHeroSection(books[0]);
 
