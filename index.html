@@ -73,7 +73,6 @@
             padding: 0 50px;
             background-size: cover;
             background-position: center;
-            transition: background 0.8s ease;
         }
 
         .hero-overlay {
@@ -81,7 +80,7 @@
             top: 0; left: 0; right: 0; bottom: 0;
             background: linear-gradient(to right, var(--vignette-color) 10%, transparent 60%),
                         linear-gradient(to top, var(--charcoal-black) 5%, transparent 40%),
-                        linear-gradient(to bottom, var(--charcoal-black) 5%, transparent 40%);
+                        linear-gradient(from bottom, var(--charcoal-black) 5%, transparent 40%);
             z-index: 1;
             transition: background 0.8s ease;
         }
@@ -104,7 +103,6 @@
         .book-logo {
             max-width: 300px;
             margin-bottom: 20px;
-            animation: fadeIn 0.5s ease;
         }
 
         .button-group {
@@ -499,7 +497,7 @@
             heroSection.style.backgroundImage = `url('${book.bgImg}')`;
             document.getElementById('hero-logo').src = book.logoImg;
 
-            document.getElementById('hero-trailer').src = `https://www.youtube.com/embed/${book.trailerId}?autoplay=1&mute=1&loop=1`;
+            document.getElementById('hero-trailer').src = `https://www.youtube.com/embed/${book.trailerId}?autoplay=1&mute=0&loop=1`;
 
             document.getElementById('btn-color').href = book.buyColorLink;
             document.getElementById('btn-bw').href = book.buyBwLink;
