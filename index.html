@@ -68,13 +68,13 @@
         /* --- HERO SECTION --- */
         .hero {
             position: relative;
+            z-index: 10;
             min-height: 100vh;
             display: flex;
             align-items: center;
             padding: 0 50px;
             background-size: cover;
             background-position: center;
-            /* Added hardware acceleration for smoother background transitions */
             transform: translateZ(0); 
         }
 
@@ -160,7 +160,8 @@
 
         /* --- MORE INFO PANEL --- */
         .more-info-panel {
-            display: none; 
+            display: none;
+            position: relative;
             z-index: 20;
             margin-top: 20px;
             background: rgba(5, 10, 21, 0.95);
