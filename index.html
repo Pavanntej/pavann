@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bookshelf</title>
+    <title>Bookshelf | Pavan Teja</title>
     <link rel="icon" href="./images/bs.png">
     <style>
         /* --- CSS VARIABLES FOR THEME --- */
@@ -12,7 +12,7 @@
             --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7);
             --dynamic-bg-color: #1a1510;
             --text-light: #f1f1f1;
-            --vignette-color: #0f0f0f;
+            --vignette-color: #F4C2C2; /* Starts with Vyshu's color */
         }
 
         /* --- GLOBAL STYLES --- */
@@ -30,7 +30,7 @@
             transition: background-color 0.8s ease;
         }
 
-        /* --- NAVIGATION --- */
+        /* --- NAVIGATION & ICONS --- */
         nav {
             position: fixed;
             top: 0;
@@ -53,37 +53,65 @@
             letter-spacing: 2px;
         }
 
+        .social-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
         .social-links a {
             color: var(--text-light);
             text-decoration: none;
-            margin-left: 20px;
             font-size: 14px;
-            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .social-links a svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
         }
 
         .social-links a:hover {
             color: #d4af37;
+            transform: translateY(-2px);
         }
 
-        /* --- HERO SECTION --- */
+        /* --- HERO SECTION & CROSSFADE BACKGROUND --- */
         .hero {
             position: relative;
             min-height: 100vh;
             display: flex;
             align-items: center;
             padding: 0 50px;
+            overflow: hidden;
+        }
+
+        /* Dual layers for smooth image crossfading */
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
             background-size: cover;
             background-position: center;
-            transform: translateZ(0); 
+            transition: opacity 1s ease-in-out;
+            z-index: 0;
         }
+        
+        #hero-bg-current { opacity: 1; }
+        #hero-bg-next { opacity: 0; }
 
         .hero-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(to right, var(--vignette-color) 10%, transparent 60%),
-                        linear-gradient(to top, var(--charcoal-black) 5%, transparent 40%);
+            /* FIXED: The bottom-to-top black gradient is now listed FIRST so it draws over the color vignette. 
+               This ensures a seamless fade into the body's charcoal-black color. */
+            background: linear-gradient(to top, var(--charcoal-black) 0%, transparent 25%),
+                        linear-gradient(to right, var(--vignette-color) 0%, transparent 60%);
             z-index: 1;
-            transition: background 0.8s ease;
+            transition: background 1s ease;
         }
 
         .hero-content {
@@ -104,6 +132,7 @@
         .book-logo {
             max-width: 300px;
             margin-bottom: 20px;
+            animation: fadeIn 1.5s ease;
         }
 
         .button-group {
@@ -120,7 +149,7 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s, filter 0.2s;
+            transition: transform 0.2s, filter 0.2s, background-color 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -138,7 +167,7 @@
         }
 
         .btn-dark {
-            background-color: rgba(51, 51, 51, 0.8);
+            background-color: rgba(20, 20, 20, 0.8);
             color: white;
             border: 1px solid #d4af37;
         }
@@ -150,6 +179,7 @@
             overflow: hidden;
             box-shadow: 0 20px 50px rgba(0,0,0,0.8);
             border: 2px solid #d4af37;
+            background: #000;
         }
 
         .hero-right iframe {
@@ -158,17 +188,27 @@
             border: none;
         }
 
-        /* --- MORE INFO PANEL --- */
+        /* --- MORE INFO PANEL (ANIMATED) --- */
         .more-info-panel {
-            display: none;
-            z-index: 20;
-            margin-top: 20px;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            visibility: hidden;
+            transition: max-height 0.6s ease, opacity 0.5s ease, padding 0.6s ease;
+            margin-top: 0px;
             background: rgba(5, 10, 21, 0.95);
-            padding: 20px;
             border-radius: 8px;
             border-left: 3px solid #d4af37;
             max-width: 100%;
             box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+        }
+
+        .more-info-panel.show {
+            max-height: 500px; 
+            opacity: 1;
+            visibility: visible;
+            padding: 20px;
+            margin-top: 20px;
         }
 
         .more-info-panel p {
@@ -180,10 +220,16 @@
         .cast-container {
             display: flex;
             gap: 15px;
+            flex-wrap: wrap;
         }
 
         .cast-card {
             text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .cast-card:hover {
+            transform: scale(1.1);
         }
 
         .cast-card img {
@@ -201,12 +247,13 @@
             color: #aaa;
         }
 
-        /* --- BOOK CAROUSEL --- */
+        /* --- BOOK CAROUSEL WITH ARROWS --- */
         .carousel-section {
             padding: 20px 50px 50px 50px;
             position: relative;
-            z-index: 2;
-            margin-top: -100px;
+            z-index: 20;
+            /* FIXED: Lowered the carousel closer to its natural position so it doesn't overlap the hero core content */
+            margin-top: -20px; 
         }
 
         .carousel-title {
@@ -215,13 +262,51 @@
             color: #d4af37;
         }
 
+        .carousel-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-arrow {
+            background: rgba(0,0,0,0.6);
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            position: absolute;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .nav-arrow:hover {
+            background: #d4af37;
+            color: #000;
+            transform: scale(1.1);
+        }
+
+        .left-arrow { left: -20px; }
+        .right-arrow { right: -20px; }
+
         .book-row {
             display: flex;
             gap: 20px;
             overflow-x: auto;
-            padding-bottom: 20px;
-            scrollbar-width: thin;
-            scrollbar-color: #d4af37 #333;
+            /* FIXED: Added padding-top so the active card has room to scale up without being chopped off! */
+            padding: 15px 15px 20px 15px; 
+            scrollbar-width: none; /* Firefox */
+            scroll-behavior: smooth;
+            width: 100%;
+        }
+        
+        .book-row::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
         }
 
         .book-card {
@@ -230,7 +315,15 @@
             border-radius: 8px;
             overflow: hidden;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        /* Highlight the active book */
+        .book-card.active {
+            border: 2px solid #d4af37;
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
         }
 
         .book-card img {
@@ -239,9 +332,9 @@
             object-fit: cover;
         }
 
-        .book-card:hover {
+        .book-card:hover:not(.active) {
             transform: scale(1.08);
-            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
         }
 
         /* --- AUTHOR & CONTACT SECTION --- */
@@ -293,23 +386,21 @@
                 flex-direction: column;
                 margin-top: 100px;
                 text-align: center;
-                padding-bottom: 120px;
+                padding-bottom: 80px;
             }
             .hero-left {
                 max-width: 100%;
-                margin-bottom: 10px;
+                margin-bottom: 30px;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
             }
             .button-group, .cast-container {
                 justify-content: center;
-                flex-direction: column;
             }
             .hero-right {
                 width: 100%;
                 max-width: 320px;
-                margin-bottom: 50px;
             }
             nav {
                 flex-direction: column;
@@ -317,31 +408,24 @@
             }
             .social-links {
                 margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
             }
-           .author-section {
-                flex-direction: column; /* Stacks items vertically */
+            .nav-arrow {
+                display: none; /* Hide arrows on mobile, rely on swipe */
+            }
+            .carousel-section {
+                padding: 20px;
+            }
+            .author-section {
+                flex-direction: column;
                 padding: 40px 20px;
-                text-align: center; /* Centers the text */
+                text-align: center;
             }
-            
-            .author-info {
-                display: contents; /* Unboxes the text so we can freely reorder the h2 and p tags */
-            }
-            
-            .author-info h2 {
-                order: 1; /* Places the heading first */
-                margin-bottom: 20px;
-            }
-            
-            .author-img {
-                order: 2; /* Places the photo second, below the heading */
-                margin-bottom: 20px;
-            }
-            
-            .author-info p {
-                order: 3; /* Places the description third, below the photo */
-                max-width: 100%; /* Ensures the text takes full width on small screens */
-            }
+            .author-info { display: contents; }
+            .author-info h2 { order: 1; margin-bottom: 20px; }
+            .author-img { order: 2; margin-bottom: 20px; }
+            .author-info p { order: 3; max-width: 100%; }
         }
     </style>
 </head>
@@ -350,14 +434,29 @@
     <nav>
         <div class="logo">Bookshelf</div>
         <div class="social-links">
-            <a href="mailto:pavanntej@email.com">Email</a>
-            <a href="https://wa.me/919542648520">WhatsApp</a>
-            <a href="https://instagram.com/pavanntej">Instagram</a>
-            <a href="https://youtube.com/@pavanntej">YouTube</a>
+            <a href="mailto:pavanntej@email.com">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z"/></svg>
+                Email
+            </a>
+            <a href="https://wa.me/919542648520" target="_blank">
+                <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.05 20.17C10.55 20.17 9.12 19.76 7.9 19.04L7.63 18.88L4.51 19.7L5.34 16.65L5.16 16.37C4.38 15.11 3.96 13.56 3.96 11.92C3.96 7.46 7.6 3.83 12.06 3.83C14.22 3.83 16.22 4.67 17.75 6.2C19.27 7.73 20.12 9.73 20.12 11.92C20.12 16.38 16.5 20.17 12.05 20.17ZM16.52 14.07C16.27 13.95 15.06 13.36 14.84 13.27C14.61 13.2 14.45 13.15 14.29 13.4C14.13 13.64 13.68 14.16 13.53 14.33C13.39 14.5 13.24 14.52 13 14.4C12.75 14.28 11.96 14.02 11.03 13.19C10.3 12.54 9.8 11.73 9.66 11.48C9.51 11.23 9.64 11.12 9.77 11C9.88 10.89 10.02 10.71 10.15 10.56C10.27 10.41 10.32 10.3 10.4 10.12C10.48 9.94 10.44 9.78 10.38 9.66C10.32 9.53 9.83 8.33 9.62 7.84C9.42 7.37 9.22 7.43 9.07 7.43C8.93 7.43 8.77 7.42 8.61 7.42C8.45 7.42 8.19 7.48 7.97 7.72C7.75 7.96 7.12 8.54 7.12 9.73C7.12 10.91 8 12.05 8.12 12.22C8.24 12.38 9.83 14.83 12.28 15.89C12.86 16.14 13.32 16.29 13.68 16.41C14.27 16.59 14.8 16.57 15.22 16.5C15.69 16.42 16.71 15.88 16.93 15.27C17.15 14.67 17.15 14.15 17.08 14.04C17.01 13.93 16.85 13.86 16.6 13.73V14.07Z"/></svg>
+                WhatsApp
+            </a>
+            <a href="https://instagram.com/pavanntej" target="_blank">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                Instagram
+            </a>
+            <a href="https://youtube.com/@pavanntej" target="_blank">
+                <svg viewBox="0 0 24 24"><path d="M21.582 6.186a2.656 2.656 0 00-1.87-1.885C18.062 3.86 12 3.86 12 3.86s-6.062 0-7.712.44A2.652 2.652 0 002.418 6.186C2 7.85 2 12 2 12s0 4.15.418 5.814a2.656 2.656 0 001.87 1.885c1.65.441 7.712.441 7.712.441s6.062 0 7.712-.441a2.652 2.652 0 001.87-1.885c.418-1.664.418-5.814.418-5.814s0-4.15-.418-5.814zM9.9 15.545V8.455L15.9 12l-6 3.545z"/></svg>
+                YouTube
+            </a>
         </div>
     </nav>
 
-    <header class="hero" id="hero-section" style="background-image: url('./images/poster/vyshu.jpg');">
+    <header class="hero" id="hero-section">
+        <div id="hero-bg-current" class="hero-bg" style="background-image: url('./images/poster/vyshu.jpg');"></div>
+        <div id="hero-bg-next" class="hero-bg"></div>
+
         <div class="hero-overlay"></div>
         <div class="hero-content">
             
@@ -365,17 +464,17 @@
                 <img id="hero-logo" src="./images/logo/vyshu.png" alt="Book Logo" class="book-logo">
                 
                 <div class="button-group">
-                    <a href="https://store.pothi.com/book/arasada-pavan-teja-vyshu/" id="btn-color" class="btn btn-gold" target="_blank">Buy (Color)</a>
-                    <a href="https://store.pothi.com/book/arasada-pavan-teja-vyshu-2/" id="btn-bw" class="btn btn-gold" target="_blank">Buy (B&W)</a>
+                    <a href="#" id="btn-color" class="btn btn-gold" target="_blank">Buy (Color)</a>
+                    <a href="#" id="btn-bw" class="btn btn-gold" target="_blank">Buy (B&W)</a>
                 </div>
                 <div class="button-group">
-                    <button class="btn btn-dark" onclick="toggleInfo()">ℹ More Info</button>
+                    <button class="btn btn-dark" onclick="toggleInfo()" aria-expanded="false" id="info-btn">ℹ More Info</button>
                     <button class="btn btn-dark" onclick="shareBook()">➦ Share</button> 
                 </div>
 
                 <div class="more-info-panel" id="info-panel">
-                    <p id="hero-desc">An orphan's obsessive love leads him to create a web series mirroring his real-life pursuit of an unreachable actress, blurring fiction and reality until a hidden truth nearly tears them apart</p>
-                    <strong style="color: #d4af37;">Genre: </strong><span id="hero-genre">Romantic Drama</span>
+                    <p id="hero-desc">Book Description goes here...</p>
+                    <strong style="color: #d4af37;">Genre: </strong><span id="hero-genre">Genre</span>
                     <br><br>
                     <strong style="color: #d4af37;">Characters / Cast:</strong>
                     <div class="cast-container" id="hero-cast">
@@ -384,7 +483,7 @@
             </div>
 
             <div class="hero-right">
-                <iframe id="hero-trailer" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=0&loop=1" allow="autoplay; encrypted-media" allowfullscreen loading="lazy" title="Book Trailer"></iframe>
+                <iframe id="hero-trailer" src="" allow="autoplay; encrypted-media" allowfullscreen loading="lazy" title="Book Trailer"></iframe>
             </div>
 
         </div>
@@ -392,8 +491,12 @@
 
     <section class="carousel-section">
         <h2 class="carousel-title">Other Works</h2>
-        <div class="book-row" id="book-row">
+        <div class="carousel-wrapper">
+            <button class="nav-arrow left-arrow" onclick="scrollCarousel(-1)">&#10094;</button>
+            <div class="book-row" id="book-row">
             </div>
+            <button class="nav-arrow right-arrow" onclick="scrollCarousel(1)">&#10095;</button>
+        </div>
     </section>
 
     <section class="author-section">
@@ -410,7 +513,6 @@
 
     <script>
         const books = [
-            // Your exact book array remains unchanged here
             {
                 id: 1,
                 title: "Index",
@@ -536,11 +638,11 @@
         ];
 
         const bookRow = document.getElementById('book-row');
+        let currentActiveCard = null; 
 
-        books.forEach(book => {
+        books.forEach((book, index) => {
             const card = document.createElement('div');
             card.className = 'book-card';
-            // OPTIMIZATION: Added loading="lazy" to images
             card.innerHTML = `<img src="${book.coverImg}" alt="${book.title}" loading="lazy">`;
             
             card.addEventListener('mouseenter', () => {
@@ -551,29 +653,44 @@
             });
 
             card.addEventListener('click', () => {
+                if (currentActiveCard) currentActiveCard.classList.remove('active');
+                card.classList.add('active');
+                currentActiveCard = card;
+
                 updateHeroSection(book);
             });
 
             bookRow.appendChild(card);
+            
+            if(index === 3) {
+                card.classList.add('active');
+                currentActiveCard = card;
+            }
         });
 
         function updateHeroSection(book) {
             document.documentElement.style.setProperty('--vignette-color', book.vignetteColor || '#0f0f0f');
+            
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            const heroSection = document.getElementById('hero-section');
-            heroSection.style.backgroundImage = `url('${book.bgImg}')`;
+            const bgCurrent = document.getElementById('hero-bg-current');
+            const bgNext = document.getElementById('hero-bg-next');
+            
+            bgNext.style.backgroundImage = `url('${book.bgImg}')`;
+            bgNext.style.opacity = '1';
+            
+            setTimeout(() => {
+                bgCurrent.style.backgroundImage = `url('${book.bgImg}')`;
+                bgNext.style.opacity = '0';
+            }, 1000);
+
             document.getElementById('hero-logo').src = book.logoImg;
-
             document.getElementById('hero-trailer').src = `https://www.youtube.com/embed/${book.trailerId}?autoplay=1&mute=0&loop=1`;
-
             document.getElementById('btn-color').href = book.buyColorLink;
             document.getElementById('btn-bw').href = book.buyBwLink;
-
             document.getElementById('hero-desc').innerText = book.desc;
             document.getElementById('hero-genre').innerText = book.genre;
 
-            // OPTIMIZATION: Prevent DOM thrashing by building HTML first
             const castContainer = document.getElementById('hero-cast');
             let castHTML = ''; 
             book.cast.forEach(person => {
@@ -584,16 +701,28 @@
                     </div>
                 `;
             });
-            castContainer.innerHTML = castHTML; // Update the DOM only once
+            castContainer.innerHTML = castHTML; 
         }
 
         function toggleInfo() {
             const panel = document.getElementById('info-panel');
-            if (panel.style.display === 'block') {
-                panel.style.display = 'none';
+            const btn = document.getElementById('info-btn');
+            
+            panel.classList.toggle('show');
+            
+            if(panel.classList.contains('show')) {
+                btn.setAttribute('aria-expanded', 'true');
             } else {
-                panel.style.display = 'block';
+                btn.setAttribute('aria-expanded', 'false');
             }
+        }
+
+        function scrollCarousel(direction) {
+            const scrollAmount = 300; 
+            bookRow.scrollBy({
+                left: direction * scrollAmount,
+                behavior: 'smooth'
+            });
         }
 
         function shareBook() {
@@ -601,7 +730,6 @@
             alert("Website link copied to clipboard!");
         }
 
-        // OPTIMIZATION: Preload background images silently so they load instantly on click
         window.addEventListener('load', () => {
             books.forEach(book => {
                 const img = new Image();
@@ -609,7 +737,7 @@
             });
         });
 
-        updateHeroSection(books[0]);
+        updateHeroSection(books[3]);
 
     </script>
 </body>
