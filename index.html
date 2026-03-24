@@ -10,9 +10,8 @@
         :root {
             --charcoal-black: #0f0f0f;
             --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7);
-            --dynamic-bg-color: #1a1510;
             --text-light: #f1f1f1;
-            --vignette-color: #F4C2C2; /* Starts with Vyshu's color */
+            --vignette-color: #F4C2C2; 
         }
 
         /* --- GLOBAL STYLES --- */
@@ -24,13 +23,13 @@
         }
 
         body {
-            background-color: var(--charcoal-black);
             color: var(--text-light);
             overflow-x: hidden;
-            transition: background-color 0.8s ease;
+            background-color: var(--charcoal-black);
+            scroll-behavior: smooth; /* Enables smooth scrolling to sections */
         }
 
-        /* --- NAVIGATION & ICONS --- */
+        /* --- NAVIGATION --- */
         nav {
             position: fixed;
             top: 0;
@@ -39,7 +38,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+            /* Updated Professional Gradient */
+            background: linear-gradient(to bottom, rgba(5, 5, 5, 0.95) 0%, rgba(5, 5, 5, 0.6) 50%, transparent 100%);
             z-index: 100;
         }
 
@@ -53,34 +53,90 @@
             letter-spacing: 2px;
         }
 
-        .social-links {
+        /* --- NEW HEADER MENU --- */
+        .nav-menu {
             display: flex;
-            gap: 20px;
+            gap: 30px;
+            list-style: none;
             align-items: center;
         }
 
-        .social-links a {
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: #d4af37;
+        }
+
+        /* Dropdown Styles */
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 15px;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            min-width: 250px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: block;
             color: var(--text-light);
             text-decoration: none;
             font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: color 0.3s, transform 0.3s;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: background 0.2s, color 0.2s;
+            cursor: pointer;
         }
 
-        .social-links a svg {
-            width: 18px;
-            height: 18px;
-            fill: currentColor;
+        .dropdown-item:last-child {
+            border-bottom: none;
         }
 
-        .social-links a:hover {
+        .dropdown-item:hover {
+            background: rgba(212, 175, 55, 0.1);
             color: #d4af37;
-            transform: translateY(-2px);
         }
 
-        /* --- HERO SECTION & CROSSFADE BACKGROUND --- */
+        .dropdown-item .book-title {
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+
+        .dropdown-item .book-genre {
+            font-size: 12px;
+            opacity: 0.7;
+            display: block;
+        }
+
+        /* --- HERO SECTION --- */
         .hero {
             position: relative;
             min-height: 100vh;
@@ -90,7 +146,6 @@
             overflow: hidden;
         }
 
-        /* Dual layers for smooth image crossfading */
         .hero-bg {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -106,8 +161,6 @@
         .hero-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            /* FIXED: The bottom-to-top black gradient is now listed FIRST so it draws over the color vignette. 
-               This ensures a seamless fade into the body's charcoal-black color. */
             background: linear-gradient(to top, var(--charcoal-black) 0%, transparent 25%),
                         linear-gradient(to right, var(--vignette-color) 0%, transparent 60%);
             z-index: 1;
@@ -125,9 +178,7 @@
             padding-bottom: 120px;
         }
 
-        .hero-left {
-            max-width: 70%;
-        }
+        .hero-left { max-width: 70%; }
 
         .book-logo {
             max-width: 300px;
@@ -149,11 +200,12 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s, filter 0.2s, background-color 0.3s;
+            transition: transform 0.2s, filter 0.2s, background-color 0.3s, color 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
+            backdrop-filter: blur(5px);
         }
 
         .btn:hover {
@@ -167,7 +219,7 @@
         }
 
         .btn-dark {
-            background-color: rgba(20, 20, 20, 0.8);
+            background-color: rgba(20, 20, 20, 0.6);
             color: white;
             border: 1px solid #d4af37;
         }
@@ -188,7 +240,7 @@
             border: none;
         }
 
-        /* --- MORE INFO PANEL (ANIMATED) --- */
+        /* --- MORE INFO PANEL --- */
         .more-info-panel {
             max-height: 0;
             opacity: 0;
@@ -196,11 +248,11 @@
             visibility: hidden;
             transition: max-height 0.6s ease, opacity 0.5s ease, padding 0.6s ease;
             margin-top: 0px;
-            background: rgba(5, 10, 21, 0.95);
+            background: rgba(5, 10, 21, 0.85);
+            backdrop-filter: blur(10px);
             border-radius: 8px;
             border-left: 3px solid #d4af37;
             max-width: 100%;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
         }
 
         .more-info-panel.show {
@@ -214,7 +266,7 @@
         .more-info-panel p {
             margin-bottom: 15px;
             line-height: 1.6;
-            color: #ccc;
+            color: #eee;
         }
 
         .cast-container {
@@ -228,31 +280,28 @@
             transition: transform 0.3s ease;
         }
         
-        .cast-card:hover {
-            transform: scale(1.1);
-        }
+        .cast-card:hover { transform: scale(1.1); }
 
         .cast-card img {
             width: 60px;
             height: 60px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid #555;
+            border: 2px solid #d4af37;
             margin-bottom: 5px;
         }
 
         .cast-card span {
             display: block;
             font-size: 12px;
-            color: #aaa;
+            color: #ddd;
         }
 
-        /* --- BOOK CAROUSEL WITH ARROWS --- */
+        /* --- BOOK CAROUSEL --- */
         .carousel-section {
             padding: 20px 50px 50px 50px;
             position: relative;
             z-index: 20;
-            /* FIXED: Lowered the carousel closer to its natural position so it doesn't overlap the hero core content */
             margin-top: -20px; 
         }
 
@@ -298,16 +347,13 @@
             display: flex;
             gap: 20px;
             overflow-x: auto;
-            /* FIXED: Added padding-top so the active card has room to scale up without being chopped off! */
             padding: 15px 15px 20px 15px; 
-            scrollbar-width: none; /* Firefox */
+            scrollbar-width: none; 
             scroll-behavior: smooth;
             width: 100%;
         }
         
-        .book-row::-webkit-scrollbar {
-            display: none; /* Chrome/Safari */
-        }
+        .book-row::-webkit-scrollbar { display: none; }
 
         .book-card {
             min-width: 200px;
@@ -319,7 +365,6 @@
             border: 2px solid transparent;
         }
 
-        /* Highlight the active book */
         .book-card.active {
             border: 2px solid #d4af37;
             transform: scale(1.05);
@@ -341,37 +386,89 @@
         .author-section {
             padding: 50px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             gap: 30px;
-            background: #111;
-            border-top: 1px solid #333;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+            z-index: 20;
+        }
+
+        .author-profile {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            max-width: 1000px;
         }
 
         .author-img {
-            width: 150px;
-            height: 150px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid #d4af37;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
 
         .author-info h2 {
             color: #d4af37;
             margin-bottom: 10px;
+            font-size: 28px;
         }
 
         .author-info p {
-            color: #ccc;
-            line-height: 1.6;
-            max-width: 75%;
+            color: #ddd;
+            line-height: 1.8;
+        }
+
+        /* Social Bar below Author */
+        .contact-bar {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 25px;
+            background: rgba(20, 20, 20, 0.6);
+            border: 1px solid #444;
+            border-radius: 30px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .contact-link:hover {
+            transform: translateY(-5px);
+            border-color: #d4af37;
+            color: #d4af37;
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+            background: rgba(0,0,0,0.8);
         }
 
         footer {
             text-align: center;
             padding: 30px;
-            background: #0a0a0a;
+            background: #000;
             color: #666;
             font-size: 14px;
+            position: relative;
+            z-index: 20;
         }
 
         /* Animations */
@@ -395,62 +492,62 @@
                 flex-direction: column;
                 align-items: center;
             }
-            .button-group, .cast-container {
-                justify-content: center;
-            }
-            .hero-right {
-                width: 100%;
-                max-width: 320px;
-            }
+            .button-group, .cast-container { justify-content: center; }
+            .hero-right { width: 100%; max-width: 320px; }
+            
             nav {
                 flex-direction: column;
                 padding: 15px;
+                gap: 15px;
+                background: rgba(5, 5, 5, 0.95); /* Solid header on mobile */
             }
-            .social-links {
-                margin-top: 15px;
+            
+            .nav-menu {
                 flex-wrap: wrap;
                 justify-content: center;
+                gap: 15px;
             }
-            .nav-arrow {
-                display: none; /* Hide arrows on mobile, rely on swipe */
+
+            .dropdown-content {
+                right: auto;
+                left: 50%;
+                transform: translateX(-50%) translateY(10px);
+                margin-top: 10px;
             }
-            .carousel-section {
-                padding: 20px;
+
+            .dropdown:hover .dropdown-content {
+                transform: translateX(-50%) translateY(0);
             }
-            .author-section {
+
+            .nav-arrow { display: none; }
+            .carousel-section { padding: 20px; }
+            
+            .author-profile {
                 flex-direction: column;
-                padding: 40px 20px;
                 text-align: center;
             }
-            .author-info { display: contents; }
-            .author-info h2 { order: 1; margin-bottom: 20px; }
-            .author-img { order: 2; margin-bottom: 20px; }
-            .author-info p { order: 3; max-width: 100%; }
+            .author-img { margin-bottom: 10px; }
         }
     </style>
 </head>
 <body>
-
+    
     <nav>
         <div class="logo">Bookshelf</div>
-        <div class="social-links">
-            <a href="mailto:pavanntej@email.com">
-                <svg viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z"/></svg>
-                Email
-            </a>
-            <a href="https://wa.me/919542648520" target="_blank">
-                <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.05 20.17C10.55 20.17 9.12 19.76 7.9 19.04L7.63 18.88L4.51 19.7L5.34 16.65L5.16 16.37C4.38 15.11 3.96 13.56 3.96 11.92C3.96 7.46 7.6 3.83 12.06 3.83C14.22 3.83 16.22 4.67 17.75 6.2C19.27 7.73 20.12 9.73 20.12 11.92C20.12 16.38 16.5 20.17 12.05 20.17ZM16.52 14.07C16.27 13.95 15.06 13.36 14.84 13.27C14.61 13.2 14.45 13.15 14.29 13.4C14.13 13.64 13.68 14.16 13.53 14.33C13.39 14.5 13.24 14.52 13 14.4C12.75 14.28 11.96 14.02 11.03 13.19C10.3 12.54 9.8 11.73 9.66 11.48C9.51 11.23 9.64 11.12 9.77 11C9.88 10.89 10.02 10.71 10.15 10.56C10.27 10.41 10.32 10.3 10.4 10.12C10.48 9.94 10.44 9.78 10.38 9.66C10.32 9.53 9.83 8.33 9.62 7.84C9.42 7.37 9.22 7.43 9.07 7.43C8.93 7.43 8.77 7.42 8.61 7.42C8.45 7.42 8.19 7.48 7.97 7.72C7.75 7.96 7.12 8.54 7.12 9.73C7.12 10.91 8 12.05 8.12 12.22C8.24 12.38 9.83 14.83 12.28 15.89C12.86 16.14 13.32 16.29 13.68 16.41C14.27 16.59 14.8 16.57 15.22 16.5C15.69 16.42 16.71 15.88 16.93 15.27C17.15 14.67 17.15 14.15 17.08 14.04C17.01 13.93 16.85 13.86 16.6 13.73V14.07Z"/></svg>
-                WhatsApp
-            </a>
-            <a href="https://instagram.com/pavanntej" target="_blank">
-                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                Instagram
-            </a>
-            <a href="https://youtube.com/@pavanntej" target="_blank">
-                <svg viewBox="0 0 24 24"><path d="M21.582 6.186a2.656 2.656 0 00-1.87-1.885C18.062 3.86 12 3.86 12 3.86s-6.062 0-7.712.44A2.652 2.652 0 002.418 6.186C2 7.85 2 12 2 12s0 4.15.418 5.814a2.656 2.656 0 001.87 1.885c1.65.441 7.712.441 7.712.441s6.062 0 7.712-.441a2.652 2.652 0 001.87-1.885c.418-1.664.418-5.814.418-5.814s0-4.15-.418-5.814zM9.9 15.545V8.455L15.9 12l-6 3.545z"/></svg>
-                YouTube
-            </a>
-        </div>
+        
+        <ul class="nav-menu">
+            <li class="nav-item dropdown">
+                <a href="#my-novels" class="nav-link">My Novels &#9662;</a>
+                <div class="dropdown-content" id="nav-books-dropdown">
+                    </div>
+            </li>
+            <li class="nav-item">
+                <a href="#about-section" class="nav-link">About Me</a>
+            </li>
+            <li class="nav-item">
+                <a href="#contact-section" class="nav-link">Get in Touch</a>
+            </li>
+        </ul>
     </nav>
 
     <header class="hero" id="hero-section">
@@ -477,8 +574,7 @@
                     <strong style="color: #d4af37;">Genre: </strong><span id="hero-genre">Genre</span>
                     <br><br>
                     <strong style="color: #d4af37;">Characters / Cast:</strong>
-                    <div class="cast-container" id="hero-cast">
-                    </div>
+                    <div class="cast-container" id="hero-cast"></div>
                 </div>
             </div>
 
@@ -489,21 +585,41 @@
         </div>
     </header>
 
-    <section class="carousel-section">
-        <h2 class="carousel-title">Other Works</h2>
+    <section class="carousel-section" id="my-novels">
+        <h2 class="carousel-title">My Novels</h2>
         <div class="carousel-wrapper">
             <button class="nav-arrow left-arrow" onclick="scrollCarousel(-1)">&#10094;</button>
-            <div class="book-row" id="book-row">
-            </div>
+            <div class="book-row" id="book-row"></div>
             <button class="nav-arrow right-arrow" onclick="scrollCarousel(1)">&#10095;</button>
         </div>
     </section>
 
-    <section class="author-section">
-        <img src="./images/pavan.jpg" alt="Author" class="author-img" loading="lazy">
-        <div class="author-info">
-            <h2>About the Author</h2>
-            <p>I am Pavan Teja, a passionate writer and storyteller who dreams of becoming a filmmaker. I love creating stories and novels that come from deep emotions like love, pain, and human struggles. For me, storytelling is not just about writing—it is about bringing my imagination to life. That is why I take my stories a step further by creating AI-generated images and AI video musical trailers, turning them into a visual blueprint or storyboard. Through this, I prepare my stories for the day I get an opportunity to transform them into films and share them with the world.</p>
+    <section class="author-section" id="about-section">
+        <div class="author-profile">
+            <img src="./images/pavan.jpg" alt="Author" class="author-img" loading="lazy">
+            <div class="author-info">
+                <h2>About the Author</h2>
+                <p>I am Pavan Teja, a passionate writer and storyteller who dreams of becoming a filmmaker. I love creating stories and novels that come from deep emotions like love, pain, and human struggles. For me, storytelling is not just about writing—it is about bringing my imagination to life. That is why I take my stories a step further by creating AI-generated images and AI video musical trailers, turning them into a visual blueprint or storyboard. Through this, I prepare my stories for the day I get an opportunity to transform them into films and share them with the world.</p>
+            </div>
+        </div>
+
+        <div class="contact-bar" id="contact-section">
+            <a href="mailto:pavanntej@email.com" class="contact-link">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z"/></svg>
+                Email
+            </a>
+            <a href="https://wa.me/919542648520" target="_blank" class="contact-link">
+                <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.05 20.17C10.55 20.17 9.12 19.76 7.9 19.04L7.63 18.88L4.51 19.7L5.34 16.65L5.16 16.37C4.38 15.11 3.96 13.56 3.96 11.92C3.96 7.46 7.6 3.83 12.06 3.83C14.22 3.83 16.22 4.67 17.75 6.2C19.27 7.73 20.12 9.73 20.12 11.92C20.12 16.38 16.5 20.17 12.05 20.17ZM16.52 14.07C16.27 13.95 15.06 13.36 14.84 13.27C14.61 13.2 14.45 13.15 14.29 13.4C14.13 13.64 13.68 14.16 13.53 14.33C13.39 14.5 13.24 14.52 13 14.4C12.75 14.28 11.96 14.02 11.03 13.19C10.3 12.54 9.8 11.73 9.66 11.48C9.51 11.23 9.64 11.12 9.77 11C9.88 10.89 10.02 10.71 10.15 10.56C10.27 10.41 10.32 10.3 10.4 10.12C10.48 9.94 10.44 9.78 10.38 9.66C10.32 9.53 9.83 8.33 9.62 7.84C9.42 7.37 9.22 7.43 9.07 7.43C8.93 7.43 8.77 7.42 8.61 7.42C8.45 7.42 8.19 7.48 7.97 7.72C7.75 7.96 7.12 8.54 7.12 9.73C7.12 10.91 8 12.05 8.12 12.22C8.24 12.38 9.83 14.83 12.28 15.89C12.86 16.14 13.32 16.29 13.68 16.41C14.27 16.59 14.8 16.57 15.22 16.5C15.69 16.42 16.71 15.88 16.93 15.27C17.15 14.67 17.15 14.15 17.08 14.04C17.01 13.93 16.85 13.86 16.6 13.73V14.07Z"/></svg>
+                WhatsApp
+            </a>
+            <a href="https://instagram.com/pavanntej" target="_blank" class="contact-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                Instagram
+            </a>
+            <a href="https://youtube.com/@pavanntej" target="_blank" class="contact-link">
+                <svg viewBox="0 0 24 24"><path d="M21.582 6.186a2.656 2.656 0 00-1.87-1.885C18.062 3.86 12 3.86 12 3.86s-6.062 0-7.712.44A2.652 2.652 0 002.418 6.186C2 7.85 2 12 2 12s0 4.15.418 5.814a2.656 2.656 0 001.87 1.885c1.65.441 7.712.441 7.712.441s6.062 0 7.712-.441a2.652 2.652 0 001.87-1.885c.418-1.664.418-5.814.418-5.814s0-4.15-.418-5.814zM9.9 15.545V8.455L15.9 12l-6 3.545z"/></svg>
+                YouTube
+            </a>
         </div>
     </section>
 
@@ -519,8 +635,7 @@
                 coverImg: "./images/card/index.jpg",
                 bgImg: "./images/poster/indexls.jpg",
                 logoImg: "./images/logo/index.png",
-                vignetteColor: "#0f0f0f",
-                themeColor: "#0f0f0f",
+                vignetteColor: "#1a1510",
                 trailerId: "iuKvGftTKCU", 
                 buyColorLink: "https://store.pothi.com/book/arasada-pavan-teja-miraz-0/",
                 buyBwLink: "https://store.pothi.com/book/arasada-pavan-teja-index/",
@@ -541,8 +656,7 @@
                 coverImg: "./images/card/naina.jpg",
                 bgImg: "./images/poster/naina.png",
                 logoImg: "./images/logo/Naina.png",
-                vignetteColor: "#0f1a1f",
-                themeColor: "#0f1a1f", 
+                vignetteColor: "#d3e2db",
                 trailerId: "26lIL6vax30", 
                 buyColorLink: "https://store.pothi.com/book/arasada-pavan-teja-naina/",
                 buyBwLink: "https://store.pothi.com/book/arasada-pavan-teja-vyshu-1/",
@@ -562,8 +676,7 @@
                 coverImg: "./images/card/miraz.jpg",
                 bgImg: "./images/poster/miraz.png",
                 logoImg: "./images/logo/miraz.png",
-                vignetteColor: "#112240",
-                themeColor: "#112240",
+                vignetteColor: "#0a192f",
                 trailerId: "meM7mPIHqyk", 
                 buyColorLink: "https://store.pothi.com/book/arasada-pavan-teja-miraz-2/",
                 buyBwLink: "https://store.pothi.com/book/arasada-pavan-teja-miraz/",
@@ -584,7 +697,6 @@
                 bgImg: "./images/poster/vyshu.jpg",
                 logoImg: "./images/logo/vyshu.png",
                 vignetteColor: "#F4C2C2",
-                themeColor: "#F4C2C2", 
                 trailerId: "iuvg65sb7ng", 
                 buyColorLink: "https://store.pothi.com/book/arasada-pavan-teja-vyshu/",
                 buyBwLink: "https://store.pothi.com/book/arasada-pavan-teja-vyshu-2/",
@@ -602,8 +714,7 @@
                 coverImg: "./images/card/anonymous.jpg",
                 bgImg: "./images/poster/anonymous.png",
                 logoImg: "./images/logo/anonymous.png",
-                vignetteColor: "#0f0f0f",
-                themeColor: "#0f0f0f",
+                vignetteColor: "#2b0a0a",
                 trailerId: "fJq81CpxlOY", 
                 buyColorLink: "https://store.pothi.com/book/arasada-pavan-teja-anonymous/",
                 buyBwLink: "https://store.pothi.com/book/arasada-pavan-teja-anonymous-0/",
@@ -621,8 +732,7 @@
                 coverImg: "./images/card/sungeetha.jpg",
                 bgImg: "./images/poster/sungeetha.jpeg",
                 logoImg: "./images/logo/sungeetha.png",
-                vignetteColor: "#0f0f0f",
-                themeColor: "#0f0f0f",
+                vignetteColor: "#2e2111",
                 trailerId: "H0h-R1HfQx8", 
                 buyColorLink: "https://store.pothi.com/book/arasada-pavan-teja-sungeetha-0/",
                 buyBwLink: "https://store.pothi.com/book/arasada-pavan-teja-sungeetha/",
@@ -637,6 +747,31 @@
             },
         ];
 
+        // 1. Determine Initial Book from URL (if it exists)
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookQuery = urlParams.get('book');
+        let initialIndex = 3; // Default to Vyshu
+        if (bookQuery) {
+            const foundIndex = books.findIndex(b => b.title.toLowerCase() === bookQuery.toLowerCase());
+            if (foundIndex !== -1) {
+                initialIndex = foundIndex;
+            }
+        }
+
+        // 2. Populate Header Dropdown Menu
+        const dropdownContent = document.getElementById('nav-books-dropdown');
+        let dropdownHTML = '';
+        books.forEach((book, index) => {
+            dropdownHTML += `
+                <a class="dropdown-item" onclick="selectBookByIndex(${index})">
+                    <span class="book-title">${book.title}</span> 
+                    <span class="book-genre">| ${book.genre}</span>
+                </a>
+            `;
+        });
+        dropdownContent.innerHTML = dropdownHTML;
+
+        // 3. Generate Carousel Cards
         const bookRow = document.getElementById('book-row');
         let currentActiveCard = null; 
 
@@ -644,38 +779,45 @@
             const card = document.createElement('div');
             card.className = 'book-card';
             card.innerHTML = `<img src="${book.coverImg}" alt="${book.title}" loading="lazy">`;
-            
-            card.addEventListener('mouseenter', () => {
-                document.body.style.backgroundColor = book.themeColor || '#0f0f0f'; 
-            });
-            card.addEventListener('mouseleave', () => {
-                document.body.style.backgroundColor = 'var(--charcoal-black)';
-            });
 
             card.addEventListener('click', () => {
-                if (currentActiveCard) currentActiveCard.classList.remove('active');
-                card.classList.add('active');
-                currentActiveCard = card;
-
-                updateHeroSection(book);
+                selectBookByIndex(index);
             });
 
             bookRow.appendChild(card);
             
-            if(index === 3) {
+            // Highlight the initial card based on URL / default
+            if(index === initialIndex) {
                 card.classList.add('active');
                 currentActiveCard = card;
             }
         });
 
-        function updateHeroSection(book) {
-            document.documentElement.style.setProperty('--vignette-color', book.vignetteColor || '#0f0f0f');
+        // Function triggered by clicking dropdown or carousel card
+        function selectBookByIndex(index) {
+            const book = books[index];
+            const cards = document.querySelectorAll('.book-card');
             
+            // Highlight active card
+            if (currentActiveCard) currentActiveCard.classList.remove('active');
+            if (cards[index]) {
+                cards[index].classList.add('active');
+                currentActiveCard = cards[index];
+            }
+
+            updateHeroSection(book);
+        }
+
+        function updateHeroSection(book) {
+            // Update Vignette Color
+            document.documentElement.style.setProperty('--vignette-color', book.vignetteColor);
+            
+            // Scroll to the top of the page
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
+            // Background Crossfade
             const bgCurrent = document.getElementById('hero-bg-current');
             const bgNext = document.getElementById('hero-bg-next');
-            
             bgNext.style.backgroundImage = `url('${book.bgImg}')`;
             bgNext.style.opacity = '1';
             
@@ -684,6 +826,7 @@
                 bgNext.style.opacity = '0';
             }, 1000);
 
+            // Update Elements
             document.getElementById('hero-logo').src = book.logoImg;
             document.getElementById('hero-trailer').src = `https://www.youtube.com/embed/${book.trailerId}?autoplay=1&mute=0&loop=1`;
             document.getElementById('btn-color').href = book.buyColorLink;
@@ -691,6 +834,7 @@
             document.getElementById('hero-desc').innerText = book.desc;
             document.getElementById('hero-genre').innerText = book.genre;
 
+            // Populate Cast
             const castContainer = document.getElementById('hero-cast');
             let castHTML = ''; 
             book.cast.forEach(person => {
@@ -702,31 +846,30 @@
                 `;
             });
             castContainer.innerHTML = castHTML; 
+
+            // Update the URL in the browser (without reloading the page!)
+            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?book=' + encodeURIComponent(book.title.toLowerCase());
+            window.history.replaceState({path: newUrl}, '', newUrl);
+            
+            // Store it globally for the Share button to use
+            window.currentBookShareUrl = newUrl;
         }
 
         function toggleInfo() {
             const panel = document.getElementById('info-panel');
             const btn = document.getElementById('info-btn');
-            
             panel.classList.toggle('show');
-            
-            if(panel.classList.contains('show')) {
-                btn.setAttribute('aria-expanded', 'true');
-            } else {
-                btn.setAttribute('aria-expanded', 'false');
-            }
+            btn.setAttribute('aria-expanded', panel.classList.contains('show') ? 'true' : 'false');
         }
 
         function scrollCarousel(direction) {
             const scrollAmount = 300; 
-            bookRow.scrollBy({
-                left: direction * scrollAmount,
-                behavior: 'smooth'
-            });
+            bookRow.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
         }
 
         function shareBook() {
-            navigator.clipboard.writeText(window.location.href);
+            // Copy the specific book URL we saved in the variable
+            navigator.clipboard.writeText(window.currentBookShareUrl || window.location.href);
             alert("Website link copied to clipboard!");
         }
 
@@ -737,7 +880,8 @@
             });
         });
 
-        updateHeroSection(books[3]);
+        // Start by loading the book matched from the URL (or Vyshu by default)
+        updateHeroSection(books[initialIndex]);
 
     </script>
 </body>
