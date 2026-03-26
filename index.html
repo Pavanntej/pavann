@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bookshelf | Pavan Teja</title>
     <link rel="icon" href="./images/bs.png">
+    
+    <link rel="preload" as="image" href="./images/poster/vyshu.jpg">
+    <link rel="preload" as="image" href="./images/logo/vyshu.png">
+
     <style>
         /* --- CSS VARIABLES FOR THEME --- */
         :root {
@@ -26,7 +30,7 @@
             color: var(--text-light);
             overflow-x: hidden;
             background-color: var(--charcoal-black);
-            scroll-behavior: smooth; /* Enables smooth scrolling to sections */
+            scroll-behavior: smooth; 
         }
 
         /* --- NAVIGATION --- */
@@ -38,7 +42,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            /* Updated Professional Gradient */
             background: linear-gradient(to bottom, rgba(5, 5, 5, 0.95) 0%, rgba(5, 5, 5, 0.6) 50%, transparent 100%);
             z-index: 100;
         }
@@ -53,7 +56,6 @@
             letter-spacing: 2px;
         }
 
-        /* --- NEW HEADER MENU --- */
         .nav-menu {
             display: flex;
             gap: 30px;
@@ -79,7 +81,6 @@
             color: #d4af37;
         }
 
-        /* Dropdown Styles */
         .dropdown-content {
             position: absolute;
             top: 100%;
@@ -196,7 +197,7 @@
         .btn {
             padding: 12px 24px;
             border: none;
-            border-radius: 4px;
+            border-radius: 30px; /* UPDATED: Rounded buttons for professional look */
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
@@ -216,12 +217,32 @@
         .btn-gold {
             background: var(--gold-gradient);
             color: #000;
+            border: 1px solid #af8f00;
         }
 
         .btn-dark {
             background-color: rgba(20, 20, 20, 0.6);
             color: white;
             border: 1px solid #d4af37;
+        }
+
+        /* NEW: Quick Genre Tag */
+        .quick-genre-tag {
+            display: inline-block;
+            margin-top: 5px;
+            padding: 8px 18px;
+            background: rgba(15, 15, 15, 0.7);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 20px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            color: #eee;
+            backdrop-filter: blur(5px);
+            animation: fadeIn 1.5s ease;
+        }
+
+        .quick-genre-tag strong {
+            color: #d4af37;
         }
 
         .hero-right {
@@ -499,7 +520,7 @@
                 flex-direction: column;
                 padding: 15px;
                 gap: 15px;
-                background: rgba(5, 5, 5, 0.95); /* Solid header on mobile */
+                background: rgba(5, 5, 5, 0.95); 
             }
             
             .nav-menu {
@@ -569,12 +590,14 @@
                     <button class="btn btn-dark" onclick="shareBook()">➦ Share</button> 
                 </div>
 
+                <div class="quick-genre-tag">
+                    <strong>Genre:</strong> <span id="quick-genre-text">Genre</span>
+                </div>
+
                 <div class="more-info-panel" id="info-panel">
                     <p id="hero-desc">Book Description goes here...</p>
-                    <strong style="color: #d4af37;">Genre: </strong><span id="hero-genre">Genre</span>
-                    <br><br>
                     <strong style="color: #d4af37;">Characters / Cast:</strong>
-                    <div class="cast-container" id="hero-cast"></div>
+                    <div class="cast-container" id="hero-cast" style="margin-top: 10px;"></div>
                 </div>
             </div>
 
@@ -639,7 +662,7 @@
                 trailerId: "iuKvGftTKCU", 
                 buyColorLink: "https://store.pothi.com/book/arasada-pavan-teja-miraz-0/",
                 buyBwLink: "https://store.pothi.com/book/arasada-pavan-teja-index/",
-                desc: "The narrative explores the intense emotional journey of someone whose quiet obsession with a person leads them to build an entire imaginary world around them, making every decision point back to the person they love.",
+                desc: "A young man’s simple tea-stall encounter turns into a deep, complicated love story where devotion, misunderstandings, and fate challenge what it truly means to love someone selflessly and obsessively such that they become our Index." 
                 genre: "Contemporary Romance",
                 cast: [
                     { name: "Ananthika Sanilkumar", img: "./images/cast/index/as.jpg" },
@@ -833,7 +856,9 @@
             document.getElementById('btn-color').href = book.buyColorLink;
             document.getElementById('btn-bw').href = book.buyBwLink;
             document.getElementById('hero-desc').innerText = book.desc;
-            document.getElementById('hero-genre').innerText = book.genre;
+            
+            // NEW: Update Quick Genre Tag
+            document.getElementById('quick-genre-text').innerText = book.genre;
 
             // Populate Cast
             const castContainer = document.getElementById('hero-cast');
