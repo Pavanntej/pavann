@@ -197,7 +197,7 @@
         .btn {
             padding: 12px 24px;
             border: none;
-            border-radius: 30px; /* UPDATED: Rounded buttons for professional look */
+            border-radius: 30px; 
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
@@ -601,7 +601,7 @@
                 </div>
             </div>
 
-            <div class="hero-right">
+            <div class="hero-right" id="hero-right-container">
                 <iframe id="hero-trailer" src="" allow="autoplay; encrypted-media" allowfullscreen loading="lazy" title="Book Trailer"></iframe>
             </div>
 
@@ -769,12 +769,26 @@
                     { name: "Karthick Kumar", img: "./images/cast/sungeetha/kk.jpg" }
                 ]
             },
+            {
+                id: 7,
+                title: "Haathi",
+                coverImg: "./images/card/haathic.png",
+                bgImg: "./images/poster/haathiposter.png",
+                logoImg: "./images/logo/haathi.png",
+                vignetteColor: "#0f172a", /* A cool dark blue suitable for Sci-Fi */
+                trailerId: "", 
+                buyColorLink: "", 
+                buyBwLink: "", 
+                desc: "A self-made scientist’s experimental AI-powered prosthetic transforms an ordinary man into a superhuman savior—forcing him to confront the true cost of power, control, and what it means to be a hero.",
+                genre: "Sci-Fi Thriller",
+                cast: []
+            }
         ];
 
         // 1. Determine Initial Book from URL (if it exists)
         const urlParams = new URLSearchParams(window.location.search);
         const bookQuery = urlParams.get('book');
-        let initialIndex = 3; // Default to Vyshu
+        let initialIndex = 6; // UPDATED: Default to Haathi (Index 6)
         if (bookQuery) {
             const foundIndex = books.findIndex(b => b.title.toLowerCase() === bookQuery.toLowerCase());
             if (foundIndex !== -1) {
@@ -852,9 +866,36 @@
 
             // Update Elements
             document.getElementById('hero-logo').src = book.logoImg;
-            document.getElementById('hero-trailer').src = `https://www.youtube.com/embed/${book.trailerId}?autoplay=1&mute=0&loop=1`;
-            document.getElementById('btn-color').href = book.buyColorLink;
-            document.getElementById('btn-bw').href = book.buyBwLink;
+            
+            // NEW LOGIC: Handle missing trailer gracefully
+            const trailerIframe = document.getElementById('hero-trailer');
+            const heroRightContainer = document.getElementById('hero-right-container');
+            if (book.trailerId) {
+                heroRightContainer.style.display = 'block';
+                trailerIframe.src = `https://www.youtube.com/embed/${book.trailerId}?autoplay=1&mute=0&loop=1`;
+            } else {
+                heroRightContainer.style.display = 'none';
+                trailerIframe.src = '';
+            }
+
+            // NEW LOGIC: Handle missing buy buttons gracefully
+            const btnColor = document.getElementById('btn-color');
+            const btnBw = document.getElementById('btn-bw');
+            
+            if (book.buyColorLink) {
+                btnColor.style.display = 'flex';
+                btnColor.href = book.buyColorLink;
+            } else {
+                btnColor.style.display = 'none';
+            }
+
+            if (book.buyBwLink) {
+                btnBw.style.display = 'flex';
+                btnBw.href = book.buyBwLink;
+            } else {
+                btnBw.style.display = 'none';
+            }
+
             document.getElementById('hero-desc').innerText = book.desc;
             
             // NEW: Update Quick Genre Tag
@@ -906,7 +947,7 @@
             });
         });
 
-        // Start by loading the book matched from the URL (or Vyshu by default)
+        // Start by loading the book matched from the URL (or Haathi by default)
         updateHeroSection(books[initialIndex]);
 
     </script>
