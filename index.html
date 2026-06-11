@@ -184,7 +184,7 @@
         .book-logo {
             max-width: 300px;
             margin-bottom: 20px;
-            animation: fadeIn 1.5s ease;
+            animation: fadeIn 0.5s ease;
         }
 
         .button-group {
@@ -808,7 +808,7 @@
         // 1. Determine Initial Book from URL (if it exists)
         const urlParams = new URLSearchParams(window.location.search);
         const bookQuery = urlParams.get('book');
-        let initialIndex = 6; // UPDATED: Default to Haathi (Index 6)
+        let initialIndex = 7; // UPDATED: Default to Haathi (Index 7)
         if (bookQuery) {
             const foundIndex = books.findIndex(b => b.title.toLowerCase() === bookQuery.toLowerCase());
             if (foundIndex !== -1) {
