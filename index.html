@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bookshelf | Pavan Teja</title>
     <link rel="icon" href="./images/bs.png">
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Explore the cinematic universe of Pavan Teja, an independent multi-genre author redefining the reading experience with AI-generated art and full-scale book trailers.">
+    <meta name="keywords" content="Pavan Teja, author, multi-genre novels, sci-fi, romance, thrillers, AI generated art, cinematic book trailers, independent publisher">
+    <meta name="author" content="Pavan Teja">
+
+    <!-- Open Graph / Facebook / WhatsApp (Social Sharing) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pavanntej.github.io/pavann/">
+    <meta property="og:title" content="Bookshelf | Pavan Teja - Multi-Genre Author & Creator">
+    <meta property="og:description" content="Discover 7 original novels featuring AI-generated art and cinematic trailers. Step into the cinematic storytelling universe of independent author Pavan Teja.">
+    <meta property="og:image" content="./images/poster/haathiposter.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourwebsite.com/">
+    <meta property="twitter:title" content="Bookshelf | Pavan Teja">
+    <meta property="twitter:description" content="Discover 7 original novels and 1 upcoming featuring AI-generated art and cinematic trailers. Step into the cinematic storytelling universe of independent author Pavan Teja.">
+    <meta property="twitter:image" content="./images/poster/haathiposter.png">
     
     <link rel="preload" as="image" href="./images/poster/haathiposter.png">
     <link rel="preload" as="image" href="./images/logo/haathi.png">
@@ -550,6 +568,53 @@
             .author-img { margin-bottom: 10px; }
         }
     </style>
+    <!-- Schema Markup (JSON-LD) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://pavanntej.github.io/pavann/#author",
+      "name": "Pavan Teja",
+      "jobTitle": "Author, Independent Publisher, Filmmaker",
+      "description": "Independent multi-genre author redefining the reading experience with AI-generated art and full-scale cinematic book trailers.",
+      "url": "https://pavanntej.github.io/pavann/",
+      "image": "https://pavanntej.github.io/pavann/images/p.jpeg",
+      "sameAs": [
+        "https://instagram.com/pavanntej",
+        "https://youtube.com/@pavanntej"
+      ]
+    },
+    {
+      "@type": "Book",
+      "name": "Haathi",
+      "author": {"@id": "https://pavanntej.github.io/pavann//#author"},
+      "bookFormat": "https://schema.org/Paperback",
+      "genre": "Sci-Fi Thriller",
+      "description": "A self-made scientist’s experimental AI-powered prosthetic transforms an ordinary man into a superhuman savior."
+    },
+    {
+      "@type": "Book",
+      "name": "Index",
+      "author": {"@id": "https://pavanntej.github.io/pavann/#author"},
+      "url": "https://store.pothi.com/book/arasada-pavan-teja-index/",
+      "bookFormat": "https://schema.org/Paperback",
+      "genre": "Contemporary Romance",
+      "description": "A young man’s simple tea-stall encounter turns into a deep, complicated love story."
+    },
+    {
+      "@type": "Book",
+      "name": "Miraz",
+      "author": {"@id": "https://pavanntej.github.io/pavann/#author"},
+      "url": "https://store.pothi.com/book/arasada-pavan-teja-miraz/",
+      "bookFormat": "https://schema.org/Paperback",
+      "genre": "Sci-Fi Horror / Techno Thriller",
+      "description": "An insecure surgeon buys an AI mirror that displays a 'perfected' version of himself, entangling him in a dark conspiracy."
+    }
+  ]
+}
+</script>
 </head>
 <body>
     
