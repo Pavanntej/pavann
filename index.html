@@ -5,19 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bookshelf | Pavan Teja</title>
     <link rel="icon" href="./images/bs.png">
-    <!-- SEO Meta Tags -->
     <meta name="description" content="Explore the cinematic universe of Pavan Teja, an independent multi-genre author redefining the reading experience with AI-generated art and full-scale book trailers.">
     <meta name="keywords" content="Pavan Teja, author, multi-genre novels, sci-fi, romance, thrillers, AI generated art, cinematic book trailers, independent publisher">
     <meta name="author" content="Pavan Teja">
 
-    <!-- Open Graph / Facebook / WhatsApp (Social Sharing) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://pavanntej.github.io/pavann/">
     <meta property="og:title" content="Bookshelf | Pavan Teja - Multi-Genre Author & Creator">
     <meta property="og:description" content="Discover 7 original novels featuring AI-generated art and cinematic trailers. Step into the cinematic storytelling universe of independent author Pavan Teja.">
     <meta property="og:image" content="./images/poster/haathiposter.png">
 
-    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://pavanntej.github.io/pavann/">
     <meta property="twitter:title" content="Bookshelf | Pavan Teja">
@@ -569,8 +566,7 @@
             .author-img { margin-bottom: 10px; }
         }
     </style>
-    <!-- Schema Markup (JSON-LD) -->
-<script type="application/ld+json">
+    <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
@@ -906,7 +902,7 @@
                 coverImg: "./images/card/haathic.png",
                 bgImg: "./images/poster/haathiposter.png",
                 logoImg: "./images/logo/haathi.png",
-                vignetteColor: "#0f172a", /* A cool dark blue suitable for Sci-Fi */
+                vignetteColor: "#0f172a", 
                 trailerId: "", 
                 buyColorLink: "", 
                 buyBwLink: "", 
@@ -919,7 +915,7 @@
         // 1. Determine Initial Book from URL (if it exists)
         const urlParams = new URLSearchParams(window.location.search);
         const bookQuery = urlParams.get('book');
-        let initialIndex = 7; // UPDATED: Default to Haathi (Index 7)
+        let initialIndex = 7; // Default to Haathi (Index 7)
         if (bookQuery) {
             const foundIndex = books.findIndex(b => b.title.toLowerCase() === bookQuery.toLowerCase());
             if (foundIndex !== -1) {
@@ -984,21 +980,33 @@
             // Scroll to the top of the page
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // Background Crossfade
             const bgCurrent = document.getElementById('hero-bg-current');
             const bgNext = document.getElementById('hero-bg-next');
-            bgNext.style.backgroundImage = `url('${book.bgImg}')`;
-            bgNext.style.opacity = '1';
-            
-            setTimeout(() => {
-                bgCurrent.style.backgroundImage = `url('${book.bgImg}')`;
-                bgNext.style.opacity = '0';
-            }, 1000);
+            const heroLogo = document.getElementById('hero-logo');
 
-            // Update Elements
-            document.getElementById('hero-logo').src = book.logoImg;
+            // --- FIXED: Pre-load the background image in memory before fading ---
+            const imgLoader = new Image();
+            imgLoader.src = book.bgImg;
             
-            // NEW LOGIC: Handle missing trailer gracefully
+            imgLoader.onload = () => {
+                // Only trigger the fade ONCE the image is fully downloaded
+                bgNext.style.backgroundImage = `url('${book.bgImg}')`;
+                bgNext.style.opacity = '1';
+                
+                setTimeout(() => {
+                    bgCurrent.style.backgroundImage = `url('${book.bgImg}')`;
+                    bgNext.style.opacity = '0';
+                }, 1000); 
+            };
+
+            // --- FIXED: Pre-load the logo in memory before swapping ---
+            const logoLoader = new Image();
+            logoLoader.src = book.logoImg;
+            logoLoader.onload = () => {
+                heroLogo.src = book.logoImg;
+            };
+            
+            // Handle missing trailer gracefully
             const trailerIframe = document.getElementById('hero-trailer');
             const heroRightContainer = document.getElementById('hero-right-container');
             if (book.trailerId) {
@@ -1009,7 +1017,7 @@
                 trailerIframe.src = '';
             }
 
-            // NEW LOGIC: Handle missing buy buttons gracefully
+            // Handle missing buy buttons gracefully
             const btnColor = document.getElementById('btn-color');
             const btnBw = document.getElementById('btn-bw');
             
@@ -1029,7 +1037,7 @@
 
             document.getElementById('hero-desc').innerText = book.desc;
             
-            // NEW: Update Quick Genre Tag
+            // Update Quick Genre Tag
             document.getElementById('quick-genre-text').innerText = book.genre;
 
             // Populate Cast
@@ -1071,10 +1079,14 @@
             alert("Website link copied to clipboard!");
         }
 
+        // --- FIXED: Preload backgrounds and logos for all books ---
         window.addEventListener('load', () => {
             books.forEach(book => {
-                const img = new Image();
-                img.src = book.bgImg;
+                const bgImg = new Image();
+                bgImg.src = book.bgImg;
+
+                const logoImg = new Image();
+                logoImg.src = book.logoImg;
             });
         });
 
