@@ -567,7 +567,7 @@
         }
     
 
-        /* --- OTHER TRAILERS --- */
+        /* --- OTHER BOOK TRAILERS --- */
         .other-trailers-section {
             position: relative;
             z-index: 20;
@@ -1178,10 +1178,10 @@
     <section class="other-trailers-section" id="other-trailers" aria-labelledby="other-trailers-title">
         <div class="other-trailers-heading">
             <div>
-                <p class="section-eyebrow">MORE FROM THE CINEMATIC UNIVERSE</p>
-                <h2 class="carousel-title" id="other-trailers-title">Other Trailers</h2>
+                <p class="section-eyebrow">MORE CINEMATIC BOOK TRAILERS</p>
+                <h2 class="carousel-title" id="other-trailers-title">Other BOOK Trailers</h2>
             </div>
-            <p class="other-trailers-intro">Short films, visual stories, and cinematic experiments.</p>
+            <p class="other-trailers-intro">Collaborations - My Trailers for Other Authors</p>
         </div>
         <div class="other-trailers-grid" id="other-trailers-grid"></div>
     </section>
@@ -1395,13 +1395,11 @@
             }
         ];
 
-        // OTHER TRAILERS: paste a YouTube Shorts URL or its 11-character video ID for each item.
-        // Hrudaya Samudram was identified from the public trailer listing; the other three IDs were not verifiable.
         const otherTrailers = [
             { title: "Hrudaya Samudram", youtubeId: "vHu4X3SXaqE" },
-            { title: "The Backpackers - Kasol To Heaven - Season 1", youtubeId: "" },
-            { title: "Athukula Gudise", youtubeId: "" },
-            { title: "Asala Dopidi", youtubeId: "" }
+            { title: "The Backpackers - Kasol To Heaven - Season 1", youtubeId: "mVAZoMVnVJQ" },
+            { title: "Atukula Gudise", youtubeId: "PbDGCIQC798" },
+            { title: "Aasala Dopidi", youtubeId: "Mm6DXAnOZbc" }
         ];
 
         // 1. Determine Initial Book from URL (if it exists)
@@ -1594,11 +1592,11 @@
                     card.style.setProperty('--trailer-image', `url("https://img.youtube.com/vi/${videoId}/hqdefault.jpg")`);
                 }
                 card.innerHTML = `
-                    <span class="trailer-card-topline">SHORT FILM · TRAILER</span>
+                    <span class="trailer-card-topline">BOOK · TRAILER</span>
                     <span class="trailer-card-center"><span class="trailer-play" aria-hidden="true">▶</span></span>
                     <span class="trailer-card-copy">
                         <span class="trailer-card-title"></span>
-                        <span class="trailer-card-cta">Watch Short</span>
+                        <span class="trailer-card-cta">Watch Trailer</span>
                     </span>`;
                 card.querySelector('.trailer-card-title').textContent = trailer.title;
                 card.addEventListener('click', () => openOtherTrailer(trailer));
