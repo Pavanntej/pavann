@@ -565,6 +565,454 @@
             }
             .author-img { margin-bottom: 10px; }
         }
+    
+
+        /* --- OTHER TRAILERS --- */
+        .other-trailers-section {
+            position: relative;
+            z-index: 20;
+            padding: 34px 50px 56px;
+            background: linear-gradient(180deg, #101010 0%, #080808 100%);
+            border-top: 1px solid rgba(212, 175, 55, 0.16);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.12);
+        }
+
+        .other-trailers-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 24px;
+            margin-bottom: 20px;
+        }
+
+        .section-eyebrow {
+            margin-bottom: 7px;
+            color: #bfa65c;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2.2px;
+        }
+
+        .other-trailers-section .carousel-title {
+            margin-bottom: 0;
+            font-size: clamp(23px, 2.5vw, 30px);
+        }
+
+        .other-trailers-intro {
+            max-width: 360px;
+            color: #a9a9a9;
+            font-size: 13px;
+            line-height: 1.6;
+            text-align: right;
+        }
+
+        .other-trailers-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .trailer-card {
+            position: relative;
+            isolation: isolate;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: stretch;
+            min-width: 0;
+            aspect-ratio: 4 / 5;
+            padding: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            background: #151515;
+            color: #fff;
+            text-align: left;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .trailer-card::before {
+            content: "";
+            position: absolute;
+            z-index: -2;
+            inset: 0;
+            background-image: var(--trailer-image, radial-gradient(circle at 75% 20%, rgba(221, 171, 63, 0.32), transparent 38%), linear-gradient(145deg, #322518 0%, #151515 55%, #080808 100%));
+            background-size: cover;
+            background-position: center;
+            transform: scale(1.01);
+            transition: transform 0.45s ease;
+        }
+
+        .trailer-card::after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.12) 32%, rgba(0, 0, 0, 0.88) 100%);
+        }
+
+        .trailer-card--2::before {
+            background-image: var(--trailer-image, radial-gradient(circle at 68% 20%, rgba(137, 193, 181, 0.4), transparent 38%), linear-gradient(145deg, #183a3a 0%, #17221f 58%, #080909 100%));
+        }
+
+        .trailer-card--3::before {
+            background-image: var(--trailer-image, radial-gradient(circle at 26% 25%, rgba(199, 133, 76, 0.38), transparent 38%), linear-gradient(145deg, #3c2517 0%, #211813 55%, #090807 100%));
+        }
+
+        .trailer-card--4::before {
+            background-image: var(--trailer-image, radial-gradient(circle at 75% 22%, rgba(153, 66, 66, 0.44), transparent 42%), linear-gradient(145deg, #351719 0%, #201112 56%, #080808 100%));
+        }
+
+        .trailer-card-topline {
+            display: inline-flex;
+            align-self: flex-start;
+            max-width: 100%;
+            padding: 6px 8px;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 99px;
+            background: rgba(0, 0, 0, 0.38);
+            color: #f0e7ca;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            backdrop-filter: blur(8px);
+        }
+
+        .trailer-card-center {
+            display: grid;
+            place-items: center;
+            margin: auto 0;
+            padding: 12px 0;
+        }
+
+        .trailer-play {
+            display: grid;
+            place-items: center;
+            width: 54px;
+            height: 54px;
+            padding-left: 3px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            background: rgba(8, 8, 8, 0.47);
+            color: white;
+            font-size: 17px;
+            box-shadow: 0 7px 25px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(8px);
+            transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+        }
+
+        .trailer-card-copy { display: block; }
+
+        .trailer-card-title {
+            display: block;
+            margin-bottom: 9px;
+            color: #fff;
+            font-size: clamp(15px, 1.5vw, 20px);
+            font-weight: 750;
+            line-height: 1.18;
+            letter-spacing: -0.25px;
+            text-wrap: balance;
+            overflow-wrap: anywhere;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
+        }
+
+        .trailer-card-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: #dfc56e;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        .trailer-card-cta::after { content: "↗"; font-size: 14px; }
+
+        .trailer-card:hover,
+        .trailer-card:focus-visible {
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.78);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.38), 0 0 0 1px rgba(212, 175, 55, 0.12);
+            outline: none;
+        }
+
+        .trailer-card:hover::before,
+        .trailer-card:focus-visible::before { transform: scale(1.07); }
+
+        .trailer-card:hover .trailer-play,
+        .trailer-card:focus-visible .trailer-play {
+            background: var(--gold-gradient);
+            color: #090909;
+            border-color: transparent;
+            transform: scale(1.06);
+        }
+
+        /* --- SHORTS POPUP PLAYER --- */
+        .trailer-modal {
+            position: fixed;
+            z-index: 1000;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+            background: rgba(0, 0, 0, 0.9);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.22s ease, visibility 0.22s ease;
+        }
+
+        .trailer-modal.is-open {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .trailer-modal-dialog {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            max-width: 100%;
+            padding: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.28);
+            border-radius: 18px;
+            background: linear-gradient(150deg, #171717 0%, #080808 100%);
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.62);
+            transform: translateY(10px) scale(0.985);
+            transition: transform 0.22s ease;
+        }
+
+        .trailer-modal.is-open .trailer-modal-dialog { transform: translateY(0) scale(1); }
+
+        .trailer-modal-heading {
+            width: 100%;
+            padding: 5px 54px 2px 8px;
+            text-align: left;
+        }
+
+        .trailer-modal-label {
+            margin-bottom: 4px;
+            color: #c5a64a;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1.8px;
+        }
+
+        .trailer-modal-heading h3 {
+            color: #f5f1e7;
+            font-size: clamp(15px, 3.5vw, 18px);
+            line-height: 1.3;
+            overflow-wrap: anywhere;
+        }
+
+        .trailer-modal-close {
+            position: absolute;
+            z-index: 2;
+            top: 13px;
+            right: 13px;
+            display: grid;
+            place-items: center;
+            width: 42px;
+            height: 42px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            font-size: 27px;
+            line-height: 1;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .trailer-modal-close:hover,
+        .trailer-modal-close:focus-visible {
+            background: var(--gold-gradient);
+            color: #111;
+            outline: 2px solid rgba(212, 175, 55, 0.45);
+            outline-offset: 2px;
+        }
+
+        .trailer-modal-player {
+            position: relative;
+            width: auto;
+            height: min(72dvh, 680px);
+            max-width: calc(100vw - 48px);
+            aspect-ratio: 9 / 16;
+            overflow: hidden;
+            border-radius: 11px;
+            background: #020202;
+        }
+
+        .trailer-modal-player iframe {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            background: #000;
+        }
+
+        .trailer-missing-video {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            height: 100%;
+            padding: 28px;
+            color: #d6d6d6;
+            text-align: center;
+            background: radial-gradient(circle at top, rgba(212, 175, 55, 0.15), transparent 46%), #101010;
+        }
+
+        .trailer-missing-video[hidden],
+        .trailer-modal-player iframe[hidden] { display: none; }
+
+        .missing-video-icon {
+            display: grid;
+            place-items: center;
+            width: 56px;
+            height: 56px;
+            padding-left: 3px;
+            border: 1px solid #c5a64a;
+            border-radius: 50%;
+            color: #e2cb81;
+            font-size: 18px;
+        }
+
+        .missing-video-title { color: #f4e8c2; font-size: 17px; font-weight: 700; }
+        .trailer-missing-video p:not(.missing-video-title) { color: #a8a8a8; font-size: 12px; line-height: 1.65; }
+        .trailer-missing-video code { color: #f1d982; overflow-wrap: anywhere; }
+        body.trailer-modal-open { overflow: hidden; }
+
+        /* --- RESPONSIVE REFINEMENTS --- */
+        html { scroll-behavior: smooth; scroll-padding-top: 112px; }
+        img, iframe { max-width: 100%; }
+        .nav-link, .btn, .contact-link, .trailer-card, .trailer-modal-close { -webkit-tap-highlight-color: transparent; }
+        :focus-visible { outline-color: #dfc56e; }
+
+        @media (max-width: 850px) {
+            nav {
+                padding: 12px 18px 10px;
+                gap: 9px;
+                background: rgba(5, 5, 5, 0.96);
+                border-bottom: 1px solid rgba(212, 175, 55, 0.16);
+            }
+
+            .logo { font-size: 24px; }
+
+            .nav-menu {
+                width: 100%;
+                max-width: 100%;
+                flex-wrap: nowrap;
+                justify-content: flex-start;
+                gap: 22px;
+                overflow-x: auto;
+                padding: 0 2px 4px;
+                scrollbar-width: none;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .nav-menu::-webkit-scrollbar { display: none; }
+            .nav-link { white-space: nowrap; font-size: 13px; letter-spacing: 0.4px; }
+
+            .hero { min-height: auto; padding: 0; }
+            .hero-content {
+                width: 100%;
+                margin-top: 0;
+                padding: 142px 24px 52px;
+                gap: 26px;
+            }
+
+            .hero-left { width: 100%; max-width: 100%; margin-bottom: 0; }
+            .book-logo { width: min(72vw, 280px); max-height: 200px; object-fit: contain; }
+            .button-group { width: 100%; max-width: 520px; gap: 10px; }
+            .btn { min-height: 44px; padding: 12px 16px; font-size: 14px; }
+            .quick-genre-tag { max-width: 100%; line-height: 1.45; }
+            .more-info-panel { width: 100%; text-align: left; }
+            .hero-right { width: min(78vw, 300px); max-width: 300px; flex-shrink: 0; }
+
+            .carousel-section { padding: 24px 22px 40px; }
+            .book-row { gap: 15px; padding: 14px 5px 20px; scroll-snap-type: x mandatory; }
+            .book-card { min-width: clamp(150px, 28vw, 200px); height: auto; aspect-ratio: 2 / 3; scroll-snap-align: start; }
+            .book-card.active { transform: none; }
+
+            .other-trailers-section { padding: 32px 22px 44px; }
+            .other-trailers-heading { align-items: start; }
+            .other-trailers-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
+            .trailer-card { aspect-ratio: 4 / 5; padding: 14px; }
+            .trailer-card-title { font-size: clamp(15px, 2.8vw, 19px); }
+
+            .author-section { padding: 42px 24px; }
+            .author-profile { width: 100%; max-width: 720px; gap: 24px; }
+            .author-info p { text-align: left; }
+            .contact-bar { width: 100%; max-width: 720px; gap: 12px; }
+            .contact-link { justify-content: center; flex: 1 1 150px; padding: 12px 18px; }
+        }
+
+        @media (max-width: 520px) {
+            html { scroll-padding-top: 118px; }
+            nav { padding: 10px 13px 8px; gap: 8px; }
+            .logo { font-size: 21px; letter-spacing: 1.5px; }
+            .nav-menu { gap: 18px; }
+            .nav-link { font-size: 12px; }
+
+            .hero-content { padding: 132px 15px 34px; gap: 22px; }
+            .book-logo { width: min(76vw, 250px); max-height: 175px; margin-bottom: 14px; }
+            .button-group { gap: 9px; margin-bottom: 11px; }
+            .btn { flex: 1 1 135px; padding: 11px 12px; font-size: 13px; }
+            .quick-genre-tag { padding: 7px 13px; font-size: 12px; letter-spacing: 0.4px; }
+            .hero-right { width: min(76vw, 270px); }
+            .more-info-panel.show { padding: 15px; margin-top: 14px; }
+            .cast-container { gap: 12px; }
+            .cast-card img { width: 52px; height: 52px; }
+
+            .carousel-section { padding: 22px 14px 31px; }
+            .carousel-title { font-size: clamp(21px, 5.8vw, 26px); }
+            .book-row { gap: 12px; padding: 12px 3px 17px; }
+            .book-card { min-width: 42vw; max-width: 190px; border-radius: 9px; }
+
+            .other-trailers-section { padding: 29px 14px 36px; }
+            .other-trailers-heading { display: block; margin-bottom: 16px; }
+            .section-eyebrow { font-size: 9px; letter-spacing: 1.5px; }
+            .other-trailers-intro { margin-top: 8px; text-align: left; font-size: 12px; }
+            .other-trailers-grid { gap: 11px; }
+            .trailer-card { padding: 11px; border-radius: 11px; aspect-ratio: 3 / 4; }
+            .trailer-card-topline { padding: 5px 6px; font-size: 7px; letter-spacing: 0.7px; }
+            .trailer-play { width: 44px; height: 44px; font-size: 15px; }
+            .trailer-card-title { margin-bottom: 7px; font-size: clamp(13px, 3.5vw, 15px); line-height: 1.2; }
+            .trailer-card-cta { font-size: 9px; }
+
+            .author-section { padding: 32px 16px; gap: 23px; }
+            .author-profile { gap: 16px; }
+            .author-img { width: 138px; height: 138px; margin-bottom: 2px; }
+            .author-info h2 { font-size: 24px; }
+            .author-info p { font-size: 14px; line-height: 1.75; }
+            .contact-bar { gap: 9px; margin-top: 5px; }
+            .contact-link { flex: 1 1 calc(50% - 9px); min-width: 0; gap: 7px; padding: 11px 9px; font-size: 12px; }
+            .contact-link svg { width: 18px; height: 18px; }
+            footer { padding: 24px 15px; font-size: 12px; }
+
+            .trailer-modal { padding: 10px; }
+            .trailer-modal-dialog { gap: 8px; padding: 8px; border-radius: 14px; }
+            .trailer-modal-heading { padding: 5px 48px 2px 5px; }
+            .trailer-modal-close { top: 10px; right: 10px; width: 38px; height: 38px; }
+            .trailer-modal-player { height: min(66dvh, 590px); max-width: calc(100vw - 36px); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+        }
+
     </style>
     <script type="application/ld+json">
 {
@@ -670,6 +1118,9 @@
                     </div>
             </li>
             <li class="nav-item">
+                <a href="#other-trailers" class="nav-link">Other Trailers</a>
+            </li>
+            <li class="nav-item">
                 <a href="#about-section" class="nav-link">About Me</a>
             </li>
             <li class="nav-item">
@@ -723,6 +1174,35 @@
             <button class="nav-arrow right-arrow" onclick="scrollCarousel(1)">&#10095;</button>
         </div>
     </section>
+
+    <section class="other-trailers-section" id="other-trailers" aria-labelledby="other-trailers-title">
+        <div class="other-trailers-heading">
+            <div>
+                <p class="section-eyebrow">MORE FROM THE CINEMATIC UNIVERSE</p>
+                <h2 class="carousel-title" id="other-trailers-title">Other Trailers</h2>
+            </div>
+            <p class="other-trailers-intro">Short films, visual stories, and cinematic experiments.</p>
+        </div>
+        <div class="other-trailers-grid" id="other-trailers-grid"></div>
+    </section>
+
+    <div class="trailer-modal" id="trailer-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="trailer-modal-title">
+        <div class="trailer-modal-dialog">
+            <div class="trailer-modal-heading">
+                <div class="trailer-modal-label">NOW PLAYING</div>
+                <h3 id="trailer-modal-title">Trailer</h3>
+            </div>
+            <button class="trailer-modal-close" id="trailer-modal-close" type="button" aria-label="Close trailer">&times;</button>
+            <div class="trailer-modal-player">
+                <iframe id="other-trailer-iframe" title="Other trailer video" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen playsinline hidden></iframe>
+                <div class="trailer-missing-video" id="trailer-missing-video" hidden>
+                    <div class="missing-video-icon" aria-hidden="true">▶</div>
+                    <p class="missing-video-title">Video link not added yet</p>
+                    <p>Paste this Short's YouTube URL into the <code>otherTrailers</code> list in the page source. The card and popup are already set up.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <section class="author-section" id="about-section">
         <div class="author-profile">
@@ -915,6 +1395,15 @@
             }
         ];
 
+        // OTHER TRAILERS: paste a YouTube Shorts URL or its 11-character video ID for each item.
+        // Hrudaya Samudram was identified from the public trailer listing; the other three IDs were not verifiable.
+        const otherTrailers = [
+            { title: "Hrudaya Samudram", youtubeId: "vHu4X3SXaqE" },
+            { title: "The Backpackers - Kasol To Heaven - Season 1", youtubeId: "mVAZoMVnVJQ" },
+            { title: "Atukula Gudise", youtubeId: "PbDGCIQC798" },
+            { title: "Asala Dopidi", youtubeId: "Mm6DXAnOZbc" }
+        ];
+
         // 1. Determine Initial Book from URL (if it exists)
         const urlParams = new URLSearchParams(window.location.search);
         const bookQuery = urlParams.get('book');
@@ -1076,10 +1565,115 @@
             bookRow.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
         }
 
+        function extractYouTubeVideoId(value) {
+            if (!value || typeof value !== 'string') return '';
+            const candidate = value.trim();
+            if (/^[A-Za-z0-9_-]{11}$/.test(candidate)) return candidate;
+            try {
+                const url = new URL(candidate);
+                const host = url.hostname.replace(/^www\./, '').toLowerCase();
+                let id = '';
+                if (host === 'youtu.be') {
+                    id = url.pathname.split('/').filter(Boolean)[0] || '';
+                } else if (host.endsWith('youtube.com') || host.endsWith('youtube-nocookie.com')) {
+                    const parts = url.pathname.split('/').filter(Boolean);
+                    if (url.pathname === '/watch') id = url.searchParams.get('v') || '';
+                    else if (['shorts', 'embed', 'live', 'v'].includes(parts[0])) id = parts[1] || '';
+                }
+                return /^[A-Za-z0-9_-]{11}$/.test(id) ? id : '';
+            } catch (_) {
+                return '';
+            }
+        }
+
+        function renderOtherTrailers() {
+            const grid = document.getElementById('other-trailers-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            otherTrailers.forEach((trailer, index) => {
+                const videoId = extractYouTubeVideoId(trailer.youtubeId);
+                const card = document.createElement('button');
+                card.type = 'button';
+                card.className = `trailer-card trailer-card--${index + 1}`;
+                card.setAttribute('aria-label', `Play ${trailer.title}`);
+                card.setAttribute('aria-haspopup', 'dialog');
+                if (videoId) {
+                    card.style.setProperty('--trailer-image', `url("https://img.youtube.com/vi/${videoId}/hqdefault.jpg")`);
+                }
+                card.innerHTML = `
+                    <span class="trailer-card-topline">BOOK · TRAILERS</span>
+                    <span class="trailer-card-center"><span class="trailer-play" aria-hidden="true">▶</span></span>
+                    <span class="trailer-card-copy">
+                        <span class="trailer-card-title"></span>
+                        <span class="trailer-card-cta">Watch Short</span>
+                    </span>`;
+                card.querySelector('.trailer-card-title').textContent = trailer.title;
+                card.addEventListener('click', () => openOtherTrailer(trailer));
+                grid.appendChild(card);
+            });
+        }
+
+        function openOtherTrailer(trailer) {
+            const modal = document.getElementById('trailer-modal');
+            const title = document.getElementById('trailer-modal-title');
+            const iframe = document.getElementById('other-trailer-iframe');
+            const missing = document.getElementById('trailer-missing-video');
+            const videoId = extractYouTubeVideoId(trailer.youtubeId);
+
+            title.textContent = trailer.title;
+            iframe.src = '';
+            iframe.hidden = true;
+            missing.hidden = true;
+
+            if (videoId) {
+                iframe.title = `${trailer.title} YouTube Short`;
+                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&playsinline=1&rel=0&modestbranding=1`;
+                iframe.hidden = false;
+            } else {
+                missing.hidden = false;
+            }
+
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('trailer-modal-open');
+            document.getElementById('trailer-modal-close').focus({ preventScroll: true });
+        }
+
+        function closeOtherTrailer() {
+            const modal = document.getElementById('trailer-modal');
+            const iframe = document.getElementById('other-trailer-iframe');
+            modal.classList.remove('is-open');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('trailer-modal-open');
+            // Removing the iframe URL stops playback immediately when the popup closes.
+            iframe.src = '';
+            iframe.hidden = true;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderOtherTrailers();
+            const modal = document.getElementById('trailer-modal');
+            const closeButton = document.getElementById('trailer-modal-close');
+            closeButton.addEventListener('click', closeOtherTrailer);
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) closeOtherTrailer();
+            });
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && modal.classList.contains('is-open')) closeOtherTrailer();
+            });
+        });
+
         function shareBook() {
-            // Copy the specific book URL we saved in the variable
-            navigator.clipboard.writeText(window.currentBookShareUrl || window.location.href);
-            alert("Website link copied to clipboard!");
+            // Copy the specific book URL we saved in the variable. Fall back gracefully on older mobile browsers.
+            const shareUrl = window.currentBookShareUrl || window.location.href;
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(shareUrl)
+                    .then(() => alert("Website link copied to clipboard!"))
+                    .catch(() => window.prompt("Copy this website link:", shareUrl));
+            } else {
+                window.prompt("Copy this website link:", shareUrl);
+            }
         }
 
         // --- FIXED: Preload backgrounds and logos for all books ---
