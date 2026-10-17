@@ -167,7 +167,7 @@
             top: 0; left: 0; right: 0; bottom: 0;
             background-size: cover;
             background-position: center;
-            transition: opacity 1s ease-in-out;
+            transition: opacity 0.22s ease-in-out;
             z-index: 0;
         }
         
@@ -1399,9 +1399,9 @@
         // Hrudaya Samudram was identified from the public trailer listing; the other three IDs were not verifiable.
         const otherTrailers = [
             { title: "Hrudaya Samudram", youtubeId: "vHu4X3SXaqE" },
-            { title: "The Backpackers - Kasol To Heaven - Season 1", youtubeId: "mVAZoMVnVJQ" },
-            { title: "Atukula Gudise", youtubeId: "PbDGCIQC798" },
-            { title: "Asala Dopidi", youtubeId: "Mm6DXAnOZbc" }
+            { title: "The Backpackers - Kasol To Heaven - Season 1", youtubeId: "" },
+            { title: "Athukula Gudise", youtubeId: "" },
+            { title: "Asala Dopidi", youtubeId: "" }
         ];
 
         // 1. Determine Initial Book from URL (if it exists)
@@ -1435,7 +1435,7 @@
         books.forEach((book, index) => {
             const card = document.createElement('div');
             card.className = 'book-card';
-            card.innerHTML = `<img src="${book.coverImg}" alt="${book.title}" loading="lazy">`;
+            card.innerHTML = `<img src="${book.coverImg}" alt="${book.title}" loading="eager" decoding="async">`;
 
             card.addEventListener('click', () => {
                 selectBookByIndex(index);
@@ -1476,27 +1476,19 @@
             const bgNext = document.getElementById('hero-bg-next');
             const heroLogo = document.getElementById('hero-logo');
 
-            // --- FIXED: Pre-load the background image in memory before fading ---
-            const imgLoader = new Image();
-            imgLoader.src = book.bgImg;
-            
-            imgLoader.onload = () => {
-                // Only trigger the fade ONCE the image is fully downloaded
-                bgNext.style.backgroundImage = `url('${book.bgImg}')`;
-                bgNext.style.opacity = '1';
-                
-                setTimeout(() => {
-                    bgCurrent.style.backgroundImage = `url('${book.bgImg}')`;
-                    bgNext.style.opacity = '0';
-                }, 1000); 
-            };
+            // Switch the hero immediately. Images are warmed by the shared preloader below;
+            // if an image is still downloading, the browser paints it as soon as it arrives.
+            bgNext.style.backgroundImage = `url("${book.bgImg}")`;
+            bgNext.style.opacity = '1';
+            heroLogo.src = book.logoImg;
+            heroLogo.alt = `${book.title} logo`;
 
-            // --- FIXED: Pre-load the logo in memory before swapping ---
-            const logoLoader = new Image();
-            logoLoader.src = book.logoImg;
-            logoLoader.onload = () => {
-                heroLogo.src = book.logoImg;
-            };
+            // Keep rapid taps from leaving an older transition queued behind a newer choice.
+            if (window.heroFadeTimer) clearTimeout(window.heroFadeTimer);
+            window.heroFadeTimer = setTimeout(() => {
+                bgCurrent.style.backgroundImage = `url("${book.bgImg}")`;
+                bgNext.style.opacity = '0';
+            }, 220);
             
             // Handle missing trailer gracefully
             const trailerIframe = document.getElementById('hero-trailer');
@@ -1602,7 +1594,7 @@
                     card.style.setProperty('--trailer-image', `url("https://img.youtube.com/vi/${videoId}/hqdefault.jpg")`);
                 }
                 card.innerHTML = `
-                    <span class="trailer-card-topline">BOOK · TRAILERS</span>
+                    <span class="trailer-card-topline">SHORT FILM · TRAILER</span>
                     <span class="trailer-card-center"><span class="trailer-play" aria-hidden="true">▶</span></span>
                     <span class="trailer-card-copy">
                         <span class="trailer-card-title"></span>
@@ -1676,19 +1668,63 @@
             }
         }
 
-        // --- FIXED: Preload backgrounds and logos for all books ---
-        window.addEventListener('load', () => {
-            books.forEach(book => {
-                const bgImg = new Image();
-                bgImg.src = book.bgImg;
-
-                const logoImg = new Image();
-                logoImg.src = book.logoImg;
+        // --- SMART ASSET WARM-UP ---
+        // Load the selected novel first, then warm every cover, logo and poster/background
+        // with a small concurrency limit. This avoids dozens of simultaneous requests on mobile.
+        const warmedImages = new Map();
+        function warmImage(src, priority = 'low') {
+            if (!src) return Promise.resolve(null);
+            if (warmedImages.has(src)) return warmedImages.get(src);
+            const promise = new Promise(resolve => {
+                const img = new Image();
+                img.decoding = 'async';
+                if ('fetchPriority' in img) img.fetchPriority = priority;
+                img.onload = () => {
+                    if (img.decode) img.decode().catch(() => {}).finally(() => resolve(img));
+                    else resolve(img);
+                };
+                img.onerror = () => resolve(null); // Keep the site usable if an optional asset is missing.
+                img.src = src;
+                if (img.complete && img.naturalWidth) resolve(img);
             });
-        });
+            warmedImages.set(src, promise);
+            return promise;
+        }
 
-        // Start by loading the book matched from the URL (or Haathi by default)
+        async function warmBookAssets(book, priority = 'low') {
+            // Poster first because it fills the hero; logo and tile cover follow.
+            await warmImage(book.bgImg, priority);
+            await Promise.all([warmImage(book.logoImg, priority), warmImage(book.coverImg, priority)]);
+        }
+
+        function startAssetWarmup() {
+            const selected = books[initialIndex];
+            // Ensure the first screen's three key images are requested at high priority.
+            warmImage(selected.bgImg, 'high');
+            warmImage(selected.logoImg, 'high');
+            warmImage(selected.coverImg, 'high');
+
+            const remaining = books.filter(book => book !== selected);
+            let cursor = 0;
+            // Two workers on mobile, three on desktop: better balance between fast first paint
+            // and keeping every novel ready for near-instant tile selection.
+            const workerCount = window.matchMedia('(max-width: 850px)').matches ? 2 : 3;
+            const worker = async () => {
+                while (cursor < remaining.length) {
+                    const book = remaining[cursor++];
+                    await warmBookAssets(book, 'low');
+                }
+            };
+            Promise.all(Array.from({ length: workerCount }, worker));
+        }
+
+        // Start by loading the book matched from the URL (or Haathi by default).
         updateHeroSection(books[initialIndex]);
+        if ('requestIdleCallback' in window) {
+            window.addEventListener('load', () => requestIdleCallback(startAssetWarmup, { timeout: 1200 }), { once: true });
+        } else {
+            window.addEventListener('load', () => setTimeout(startAssetWarmup, 250), { once: true });
+        }
 
     </script>
 </body>
