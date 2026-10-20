@@ -567,7 +567,7 @@
         }
     
 
-        /* --- OTHER BOOK TRAILERS --- */
+        /* --- OTHER TRAILERS --- */
         .other-trailers-section {
             position: relative;
             z-index: 20;
@@ -1013,6 +1013,349 @@
             *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
         }
 
+
+
+        /* --- DEDICATED MOBILE APP EXPERIENCE (desktop styles remain untouched) --- */
+        .mobile-explore-link,
+        .mobile-featured-label,
+        .mobile-feature-actions,
+        .mobile-bottom-nav { display: none; }
+
+        @media (max-width: 850px) {
+            :root { color-scheme: dark; }
+            html { scroll-padding-top: 74px; scroll-padding-bottom: 92px; }
+            body { padding-bottom: calc(76px + env(safe-area-inset-bottom)); background: #090909; } 
+
+            /* Compact app header */
+            nav:not(.mobile-bottom-nav) {
+                height: 62px;
+                min-height: 62px;
+                padding: 0 18px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+                background: rgba(8, 8, 8, 0.92);
+                border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+                -webkit-backdrop-filter: blur(18px);
+                backdrop-filter: blur(18px);
+            }
+            .logo { font-size: 21px; letter-spacing: 1.35px; line-height: 1; }
+            .mobile-explore-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 9px 13px;
+                border: 1px solid rgba(212, 175, 55, 0.48);
+                border-radius: 999px;
+                color: #f4e6ba;
+                text-decoration: none;
+                font-size: 11px;
+                font-weight: 750;
+                letter-spacing: 0.65px;
+                text-transform: uppercase;
+                background: rgba(212, 175, 55, 0.08);
+            }
+            .mobile-explore-link span { color: #e8c95d; font-size: 15px; line-height: 0.8; }
+            nav:not(.mobile-bottom-nav) .nav-menu { display: none; }
+
+            /* Poster-led featured title: the page feels designed for a phone, not squeezed down */
+            .hero {
+                min-height: 560px;
+                display: block;
+                overflow: hidden;
+                padding: 0;
+                background: #0a0a0a;
+            }
+            .hero-bg {
+                top: 0;
+                bottom: auto;
+                height: 620px;
+                background-size: cover;
+                background-position: center 19%;
+                transform: translateZ(0);
+            }
+            .hero-overlay {
+                top: 0;
+                bottom: auto;
+                height: 690px;
+                background:
+                    linear-gradient(180deg, rgba(5,5,5,0.06) 0%, rgba(5,5,5,0.06) 22%, rgba(9,9,9,0.62) 54%, #090909 94%),
+                    linear-gradient(90deg, rgba(0,0,0,0.18), transparent 72%);
+            }
+            .hero-content {
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                justify-content: flex-start;
+                gap: 14px;
+                width: 100%;
+                min-height: 560px;
+                margin: 0;
+                padding: 93px 17px 28px;
+                position: relative;
+            }
+            .hero-left {
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+                text-align: left;
+            }
+            .mobile-featured-label {
+                display: inline-flex;
+                align-items: center;
+                align-self: flex-start;
+                gap: 7px;
+                margin: 0 0 7px 2px;
+                color: #f0d985;
+                font-size: 9px;
+                font-weight: 800;
+                letter-spacing: 2px;
+                text-shadow: 0 2px 10px #000;
+            }
+            .mobile-live-dot {
+                display: inline-block;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: #e6c45b;
+                box-shadow: 0 0 12px rgba(230,196,91,.65);
+            }
+            .book-logo {
+                display: block;
+                width: min(69vw, 245px);
+                max-width: 100%;
+                max-height: 136px;
+                object-fit: contain;
+                object-position: left center;
+                align-self: flex-start;
+                margin: 0 0 13px;
+                filter: drop-shadow(0 7px 20px rgba(0,0,0,.48));
+            }
+            .mobile-feature-actions { display: flex; width: 100%; margin: 0 0 11px; }
+            .mobile-watch-button {
+                width: 100%;
+                min-height: 48px;
+                justify-content: center;
+                gap: 10px;
+                border-radius: 13px;
+                font-size: 14px;
+                font-weight: 800;
+                box-shadow: 0 8px 25px rgba(191,149,63,.14);
+            }
+            .button-group {
+                display: flex;
+                width: 100%;
+                max-width: 100%;
+                justify-content: stretch;
+                gap: 9px;
+                margin-bottom: 9px;
+            }
+            .button-group .btn {
+                flex: 1 1 0;
+                min-width: 0;
+                min-height: 43px;
+                padding: 10px 9px;
+                border-radius: 12px;
+                justify-content: center;
+                align-items: center;
+                font-size: 12px;
+                font-weight: 750;
+                letter-spacing: .1px;
+            }
+            .button-group .btn-dark { background: rgba(18,18,18,.66); border-color: rgba(212,175,55,.55); }
+            .quick-genre-tag {
+                align-self: flex-start;
+                margin-top: 3px;
+                padding: 7px 11px;
+                border-radius: 8px;
+                border-color: rgba(212,175,55,.32);
+                background: rgba(8,8,8,.62);
+                font-size: 11px;
+                letter-spacing: .15px;
+                line-height: 1.35;
+            }
+            .more-info-panel,
+            .more-info-panel.show {
+                width: 100%;
+                max-width: 100%;
+                text-align: left;
+                border: 1px solid rgba(212,175,55,.28);
+                border-left: 2px solid #d4af37;
+                border-radius: 12px;
+                background: rgba(11,11,11,.9);
+                -webkit-backdrop-filter: blur(14px);
+                backdrop-filter: blur(14px);
+            }
+            .more-info-panel.show { padding: 15px; margin-top: 10px; }
+            .more-info-panel p { font-size: 13px; line-height: 1.65; }
+            .hero-right { display: none !important; }
+
+            /* Horizontal library shelf like a streaming app */
+            .carousel-section {
+                margin-top: 0;
+                padding: 23px 0 29px;
+                overflow: hidden;
+                background: linear-gradient(180deg, #090909 0%, #101010 100%);
+            }
+            .carousel-section > .carousel-title {
+                padding: 0 17px;
+                margin-bottom: 2px;
+                font-size: 21px;
+                letter-spacing: -.35px;
+            }
+            .carousel-wrapper { width: 100%; }
+            .nav-arrow { display: none !important; }
+            .book-row {
+                gap: 12px;
+                width: 100%;
+                padding: 13px 17px 17px;
+                scroll-padding-left: 17px;
+                scroll-snap-type: x mandatory;
+                overscroll-behavior-x: contain;
+            }
+            .book-card {
+                position: relative;
+                flex: 0 0 39vw;
+                min-width: 39vw;
+                max-width: 170px;
+                height: auto;
+                aspect-ratio: 2 / 3;
+                border: 1px solid rgba(255,255,255,.12);
+                border-radius: 12px;
+                scroll-snap-align: start;
+                box-shadow: 0 9px 24px rgba(0,0,0,.35);
+                transform: none !important;
+                isolation: isolate;
+            }
+            .book-card::after {
+                content: attr(data-title);
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                padding: 30px 9px 10px;
+                color: #fff;
+                font-size: 12px;
+                font-weight: 800;
+                line-height: 1.2;
+                text-align: left;
+                overflow-wrap: anywhere;
+                text-shadow: 0 2px 8px #000;
+                background: linear-gradient(180deg, transparent, rgba(0,0,0,.9));
+            }
+            .book-card.active {
+                border: 2px solid #d4af37;
+                box-shadow: 0 0 0 1px rgba(212,175,55,.18), 0 12px 27px rgba(0,0,0,.5);
+            }
+            .book-card:focus-visible { outline: 2px solid #e4c75f; outline-offset: 3px; }
+
+            /* Trailer tiles become touch-friendly, neatly rounded app cards */
+            .other-trailers-section {
+                padding: 27px 17px 32px;
+                background: #0d0d0d;
+                border-top: 1px solid rgba(255,255,255,.06);
+                border-bottom: 1px solid rgba(255,255,255,.06);
+            }
+            .other-trailers-heading { display: block; margin-bottom: 15px; }
+            .section-eyebrow { font-size: 9px; letter-spacing: 1.45px; margin-bottom: 7px; }
+            .other-trailers-section .carousel-title { font-size: 21px; letter-spacing: -.35px; }
+            .other-trailers-intro { margin-top: 7px; max-width: 100%; font-size: 12px; line-height: 1.55; text-align: left; }
+            .other-trailers-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; }
+            .trailer-card { aspect-ratio: 3 / 4; min-height: 190px; padding: 11px; border-radius: 13px; }
+            .trailer-card-topline { font-size: 7px; letter-spacing: .55px; padding: 5px 6px; }
+            .trailer-play { width: 42px; height: 42px; font-size: 14px; }
+            .trailer-card-title { font-size: clamp(12px, 3.4vw, 15px); line-height: 1.2; margin-bottom: 7px; }
+            .trailer-card-cta { font-size: 9px; }
+
+            /* About card and contact actions match the same app visual language */
+            .author-section {
+                padding: 31px 17px 35px;
+                gap: 22px;
+                background: #090909;
+                border-top: 1px solid rgba(212,175,55,.18);
+            }
+            .author-profile {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                max-width: 520px;
+                align-items: flex-start;
+                gap: 14px;
+                padding: 19px;
+                border: 1px solid rgba(255,255,255,.1);
+                border-radius: 16px;
+                background: linear-gradient(145deg, rgba(28,28,28,.92), rgba(12,12,12,.92));
+            }
+            .author-img { width: 98px; height: 98px; margin: 0; }
+            .author-info h2 { margin-bottom: 8px; font-size: 21px; }
+            .author-info p { font-size: 13px; line-height: 1.7; text-align: left; color: #c6c6c6; }
+            .contact-bar { display: grid; width: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin-top: 0; }
+            .contact-link { min-width: 0; justify-content: flex-start; gap: 8px; padding: 12px 13px; border-radius: 12px; font-size: 12px; background: #151515; }
+            .contact-link svg { width: 18px; height: 18px; flex: 0 0 auto; }
+            footer { padding: 23px 15px 28px; font-size: 11px; background: #050505; }
+
+            /* Persistent app navigation with safe-area support */
+            .mobile-bottom-nav {
+                position: fixed;
+                /* Override the global nav { top: 0 } rule. Without this,
+                   top and bottom are both set and the bar covers the whole page. */
+                top: auto;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: auto;
+                min-height: 0;
+                z-index: 950;
+                display: grid;
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                gap: 0;
+                padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+                border-top: 1px solid rgba(212,175,55,.2);
+                background: rgba(7,7,7,.94);
+                -webkit-backdrop-filter: blur(22px);
+                backdrop-filter: blur(22px);
+                box-shadow: 0 -10px 35px rgba(0,0,0,.4);
+            }
+            .mobile-nav-item {
+                display: flex;
+                min-height: 48px;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 4px;
+                color: #888;
+                text-decoration: none;
+                font-size: 9px;
+                font-weight: 700;
+                letter-spacing: .25px;
+                transition: color .18s ease, transform .18s ease;
+                -webkit-tap-highlight-color: transparent;
+            }
+            .mobile-nav-item svg { width: 21px; height: 21px; fill: currentColor; }
+            .mobile-nav-item.is-active { color: #e3c55f; }
+            .mobile-nav-item.is-active svg { filter: drop-shadow(0 0 7px rgba(227,197,95,.25)); }
+            .mobile-nav-item:active { transform: scale(.96); }
+
+            /* Popups rise above the bottom app bar */
+            .trailer-modal { padding: 12px; }
+            .trailer-modal-dialog { gap: 9px; padding: 9px; border-radius: 16px; }
+            .trailer-modal-player { height: min(70dvh, 620px); max-width: calc(100vw - 34px); }
+        }
+
+        @media (max-width: 380px) {
+            .hero-content { padding-left: 14px; padding-right: 14px; }
+            .mobile-explore-link { padding: 8px 10px; font-size: 10px; }
+            .book-card { flex-basis: 42vw; min-width: 42vw; }
+            .other-trailers-section { padding-left: 14px; padding-right: 14px; }
+            .trailer-card { min-height: 170px; }
+            .button-group .btn { padding-left: 7px; padding-right: 7px; font-size: 11px; }
+        }
+
     </style>
     <script type="application/ld+json">
 {
@@ -1110,6 +1453,7 @@
     
     <nav>
         <div class="logo">Bookshelf</div>
+        <a class="mobile-explore-link" href="#my-novels" aria-label="Explore novels">Explore <span aria-hidden="true">↓</span></a>
         
         <ul class="nav-menu">
             <li class="nav-item dropdown">
@@ -1137,7 +1481,11 @@
         <div class="hero-content">
             
             <div class="hero-left">
+                <div class="mobile-featured-label"><span class="mobile-live-dot" aria-hidden="true"></span> FEATURED STORY</div>
                 <img id="hero-logo" src="./images/logo/haathi.png" alt="Book Logo" class="book-logo">
+                <div class="mobile-feature-actions">
+                    <button class="btn btn-gold mobile-watch-button" type="button" onclick="openFeaturedTrailer()">▶ <span>Watch Trailer</span></button>
+                </div>
                 
                 <div class="button-group">
                     <a href="#" id="btn-color" class="btn btn-gold" target="_blank">Buy (Color)</a>
@@ -1178,10 +1526,10 @@
     <section class="other-trailers-section" id="other-trailers" aria-labelledby="other-trailers-title">
         <div class="other-trailers-heading">
             <div>
-                <p class="section-eyebrow">MORE CINEMATIC BOOK TRAILERS</p>
-                <h2 class="carousel-title" id="other-trailers-title">Other BOOK Trailers</h2>
+                <p class="section-eyebrow">MORE FROM THE CINEMATIC UNIVERSE</p>
+                <h2 class="carousel-title" id="other-trailers-title">Other Trailers</h2>
             </div>
-            <p class="other-trailers-intro">Collaborations - My Trailers for Other Authors</p>
+            <p class="other-trailers-intro">Short films, visual stories, and cinematic experiments.</p>
         </div>
         <div class="other-trailers-grid" id="other-trailers-grid"></div>
     </section>
@@ -1198,7 +1546,7 @@
                 <div class="trailer-missing-video" id="trailer-missing-video" hidden>
                     <div class="missing-video-icon" aria-hidden="true">▶</div>
                     <p class="missing-video-title">Video link not added yet</p>
-                    <p>Paste this Short's YouTube URL into the <code>otherTrailers</code> list in the page source. The card and popup are already set up.</p>
+                    <p>The video link for this title has not been added yet. Please check back later.</p>
                 </div>
             </div>
         </div>
@@ -1236,6 +1584,21 @@
     <footer>
         <p>&copy; 2026 | Pavan Teja | All rights reserved.</p>
     </footer>
+
+    <nav class="mobile-bottom-nav" aria-label="Mobile app navigation">
+        <a href="#hero-section" class="mobile-nav-item is-active" data-mobile-target="hero-section" aria-label="Home">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.8 12 3l9 7.8v9.1a1.1 1.1 0 0 1-1.1 1.1h-5.2v-6.1H9.3V21H4.1A1.1 1.1 0 0 1 3 19.9z"/></svg><span>Home</span>
+        </a>
+        <a href="#my-novels" class="mobile-nav-item" data-mobile-target="my-novels" aria-label="Books">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3.5h11.8A2.2 2.2 0 0 1 18 5.7V21H6.3A2.3 2.3 0 0 1 4 18.7zM7 6v12.5c0 .8.5 1.5 1.3 1.5H20v-2H8.4V6z"/><path d="M8.5 8.3h6.8M8.5 11.2h6.8"/></svg><span>Books</span>
+        </a>
+        <a href="#other-trailers" class="mobile-nav-item" data-mobile-target="other-trailers" aria-label="Trailers">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3.8A1.8 1.8 0 0 0 3.2 5.6v12.8A1.8 1.8 0 0 0 5 20.2h14a1.8 1.8 0 0 0 1.8-1.8V5.6A1.8 1.8 0 0 0 19 3.8zM10 8l6.5 4-6.5 4z"/></svg><span>Trailers</span>
+        </a>
+        <a href="#about-section" class="mobile-nav-item" data-mobile-target="about-section" aria-label="About">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4.2 4.2 0 1 0 0-8.4 4.2 4.2 0 0 0 0 8.4M4 20.4a8 8 0 0 1 16 0z"/></svg><span>About</span>
+        </a>
+    </nav>
 
     <script>
         const books = [
@@ -1395,6 +1758,8 @@
             }
         ];
 
+        // OTHER TRAILERS: paste a YouTube Shorts URL or its 11-character video ID for each item.
+        // Hrudaya Samudram was identified from the public trailer listing; the other three IDs were not verifiable.
         const otherTrailers = [
             { title: "Hrudaya Samudram", youtubeId: "vHu4X3SXaqE" },
             { title: "The Backpackers - Kasol To Heaven - Season 1", youtubeId: "mVAZoMVnVJQ" },
@@ -1412,6 +1777,7 @@
                 initialIndex = foundIndex;
             }
         }
+        let currentFeaturedBook = books[initialIndex];
 
         // 2. Populate Header Dropdown Menu
         const dropdownContent = document.getElementById('nav-books-dropdown');
@@ -1433,10 +1799,20 @@
         books.forEach((book, index) => {
             const card = document.createElement('div');
             card.className = 'book-card';
+            card.dataset.title = book.title;
+            card.setAttribute('role', 'button');
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('aria-label', `Feature ${book.title}`);
             card.innerHTML = `<img src="${book.coverImg}" alt="${book.title}" loading="eager" decoding="async">`;
 
             card.addEventListener('click', () => {
                 selectBookByIndex(index);
+            });
+            card.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    selectBookByIndex(index);
+                }
             });
 
             bookRow.appendChild(card);
@@ -1488,10 +1864,12 @@
                 bgNext.style.opacity = '0';
             }, 220);
             
-            // Handle missing trailer gracefully
+            // Remember the selected title. On phones, load the trailer only after a tap to save data.
+            currentFeaturedBook = book;
             const trailerIframe = document.getElementById('hero-trailer');
             const heroRightContainer = document.getElementById('hero-right-container');
-            if (book.trailerId) {
+            const isMobileLayout = window.matchMedia('(max-width: 850px)').matches;
+            if (book.trailerId && !isMobileLayout) {
                 heroRightContainer.style.display = 'block';
                 trailerIframe.src = `https://www.youtube.com/embed/${book.trailerId}?autoplay=1&mute=0&loop=1`;
             } else {
@@ -1592,11 +1970,11 @@
                     card.style.setProperty('--trailer-image', `url("https://img.youtube.com/vi/${videoId}/hqdefault.jpg")`);
                 }
                 card.innerHTML = `
-                    <span class="trailer-card-topline">BOOK · TRAILER</span>
+                    <span class="trailer-card-topline">SHORT FILM · TRAILER</span>
                     <span class="trailer-card-center"><span class="trailer-play" aria-hidden="true">▶</span></span>
                     <span class="trailer-card-copy">
                         <span class="trailer-card-title"></span>
-                        <span class="trailer-card-cta">Watch Trailer</span>
+                        <span class="trailer-card-cta">Watch Short</span>
                     </span>`;
                 card.querySelector('.trailer-card-title').textContent = trailer.title;
                 card.addEventListener('click', () => openOtherTrailer(trailer));
@@ -1630,6 +2008,12 @@
             document.getElementById('trailer-modal-close').focus({ preventScroll: true });
         }
 
+        function openFeaturedTrailer() {
+            const book = currentFeaturedBook;
+            if (!book) return;
+            openOtherTrailer({ title: `${book.title} — Trailer`, youtubeId: book.trailerId || '' });
+        }
+
         function closeOtherTrailer() {
             const modal = document.getElementById('trailer-modal');
             const iframe = document.getElementById('other-trailer-iframe');
@@ -1652,6 +2036,28 @@
             document.addEventListener('keydown', (event) => {
                 if (event.key === 'Escape' && modal.classList.contains('is-open')) closeOtherTrailer();
             });
+
+            const mobileNavItems = Array.from(document.querySelectorAll('.mobile-nav-item'));
+            const setActiveMobileNav = (targetId) => {
+                mobileNavItems.forEach((navItem) => {
+                    navItem.classList.toggle('is-active', navItem.dataset.mobileTarget === targetId);
+                });
+            };
+            mobileNavItems.forEach((item) => {
+                item.addEventListener('click', () => setActiveMobileNav(item.dataset.mobileTarget));
+            });
+            if ('IntersectionObserver' in window) {
+                const mobileSectionObserver = new IntersectionObserver((entries) => {
+                    const visibleSections = entries
+                        .filter((entry) => entry.isIntersecting)
+                        .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+                    if (visibleSections[0]) setActiveMobileNav(visibleSections[0].target.id);
+                }, { rootMargin: '-18% 0px -58% 0px', threshold: [0, 0.1, 0.25, 0.5] });
+                mobileNavItems.forEach((item) => {
+                    const target = document.getElementById(item.dataset.mobileTarget);
+                    if (target) mobileSectionObserver.observe(target);
+                });
+            }
         });
 
         function shareBook() {
